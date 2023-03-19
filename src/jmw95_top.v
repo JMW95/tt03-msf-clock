@@ -20,7 +20,7 @@ wire       bits_is_second_00;
 wire [1:0] bits_data;
 
 // Outputs
-assign io_out = 8'b0;
+assign io_out = {4'b0, bits_data, bits_is_second_00, bits_valid};
 
 bit_sampler bit_sampler (
     .clk_i   (clk),

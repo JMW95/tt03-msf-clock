@@ -5,7 +5,7 @@
 module tb (
     input clk_i,
     input rst_i,
-    output [7:0] ouputs_o
+    output [7:0] outputs_o
 );
 
 initial begin
@@ -14,10 +14,10 @@ initial begin
     #1;
 end
 
-wire [7:0] inputs = {6'b0, rst, clk};
+wire [7:0] inputs = {6'b0, rst_i, clk_i};
 
 // instantiate the DUT
-seven_segment_seconds seven_segment_seconds(
+jmw95_top jmw95_top(
     `ifdef GL_TEST
         .vccd1( 1'b1),
         .vssd1( 1'b0),

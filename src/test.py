@@ -17,4 +17,4 @@ async def test_tmp(dut):
 
     for i in range(10):
         await ClockCycles(dut.clk, 1)
-        assert int(dut.segments.value) == not prev
+        assert int(dut.segments.value) == (not prev)

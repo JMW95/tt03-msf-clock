@@ -9,6 +9,9 @@ project:
     - jmw95_top.v
     - bit_sampler.v
     - decoder.v
+    - time_date_decoder.v
+    - digit.v
+    - digits.v
   top_module:  "jmw95_top"      # put the name of your top module here, make it unique by prepending your github username
 
 # Keep a track of the submission yaml

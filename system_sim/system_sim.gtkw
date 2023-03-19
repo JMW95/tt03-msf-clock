@@ -2,10 +2,10 @@
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
 [*] Sun Mar 19 22:03:41 2023
 [*]
-[dumpfile] "\\wsl$\ubuntu\home\daniel\code\tinytapeout\tt03-msf-clock\system_sim\logs\dump.vcd"
+[dumpfile] "logs/dump.vcd"
 [dumpfile_mtime] "Sun Mar 19 22:03:11 2023"
 [dumpfile_size] 601326
-[savefile] "\\wsl$\ubuntu\home\daniel\code\tinytapeout\tt03-msf-clock\system_sim\system_sim.gtkw"
+[savefile] "system_sim.gtkw"
 [timestart] 0
 [size] 1866 831
 [pos] -1 -1

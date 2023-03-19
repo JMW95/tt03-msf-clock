@@ -2,10 +2,10 @@
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
 [*] Sun Mar 19 15:14:03 2023
 [*]
-[dumpfile] "\\wsl$\ubuntu\home\daniel\code\tinytapeout\tt03-msf-clock\test\test_decoder\tb.vcd"
+[dumpfile] "tb.vcd"
 [dumpfile_mtime] "Sun Mar 19 15:13:40 2023"
 [dumpfile_size] 32172
-[savefile] "\\wsl$\ubuntu\home\daniel\code\tinytapeout\tt03-msf-clock\test\test_decoder\test_decoder.gtkw"
+[savefile] "test_decoder.gtkw"
 [timestart] 0
 [size] 1866 982
 [pos] -1 -1

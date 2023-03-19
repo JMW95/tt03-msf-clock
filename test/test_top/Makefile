@@ -14,7 +14,10 @@ VERILOG_SOURCES += \
 	$(PWD)/tb.v \
 	$(SRC)/jmw95_top.v \
 	$(SRC)/bit_sampler.v \
-	$(SRC)/decoder.v
+	$(SRC)/decoder.v \
+	$(SRC)/time_date_decoder.v \
+	$(SRC)/digits.v \
+	$(SRC)/digit.v
 
 else
 

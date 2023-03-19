@@ -2,13 +2,15 @@ module digit #(
     parameter MAX = 9,
     parameter WIDTH = $clog2(MAX + 1)
 )(
-    input  clk_i,
-    input  rst_i,
+    input                clk_i,
+    input                rst_i,
 
-    input  inc_i,
-    output ovf_o,
+    output [WIDTH - 1:0] digit_o,
 
-    input  load_i,
+    input                inc_i,
+    output               ovf_o,
+
+    input                load_i,
     input  [WIDTH - 1:0] load_value_i
 );
 
@@ -22,7 +24,8 @@ reg ovf;
 
 //-- Logic -------------------------------------------------------------------
 
-assign ovf_o = inc_i && ovf;
+assign digit_o = digit_reg;
+assign ovf_o   = inc_i && ovf;
 
 always @(*) begin
     if (digit_reg == MAX) begin

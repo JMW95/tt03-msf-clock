@@ -1,5 +1,19 @@
 #!/bin/sh
 
+# Usage:
+#
+#     # Run all tests:
+#     ./test.sh
+#
+#     # Run gate level simulation
+#     GATES=yes ./test.sh
+#
+#     # Clean all tests
+#     ./test.sh clean
+#
+#     # Run testbench <test_foo>
+#     ./test.sh <test_foo>
+
 set -eux
 
 . ./env
@@ -14,15 +28,10 @@ if ! which cocotb-config; then
     pip install -qr requirements.txt
 fi
 
-# Run with `gate` as first argument to run a gate-level simulation instead
-TYPE=${1:-normal}
-
-export GATES="no"
-if [ "x$TYPE" = "xgate" ]; then
-    export GATES="yes"
+if [ "${GATES:-}" = "yes" ]; then
     cp runs/wokwi/results/final/verilog/gl/jmw95_top.v test/test_top/gate_level_netlist.v
 fi
 
 # Run tests
 cd test
-make
+make $@

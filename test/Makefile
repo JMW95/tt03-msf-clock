@@ -1,20 +1,28 @@
-# normal simulation
+TOP_TEST = test_top
+
+SUBMODULE_TESTS = \
+    test_bit_sampler \
+    test_decoder \
+    test_digit
+
+ALL_TESTS = $(TOP_TEST) $(SUBMODULE_TESTS)
+
 ifneq ($(GATES),yes)
-
-all:
-	$(MAKE) -C test_top
-	$(MAKE) -C test_bit_sampler
-	$(MAKE) -C test_decoder
-
+    # normal simulation
+    TESTS = $(ALL_TESTS)
 else
-# Gate-level simulation
-
-all:
-	$(MAKE) -C test_top
-
+    # gate level simulation
+    TESTS = $(TOP_TEST)
 endif
 
+.PHONY: all $(TESTS)
+
+all: $(TESTS)
+
+$(TESTS):
+	$(MAKE) -C $@
+
 clean:
-	$(MAKE) -C test_top clean
-	$(MAKE) -C test_bit_sampler clean
-	$(MAKE) -C test_decoder clean
+	for dir in $(ALL_TESTS); do \
+		$(MAKE) -C $$dir clean; \
+	done

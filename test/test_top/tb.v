@@ -5,6 +5,7 @@
 module tb (
     input clk_i,
     input rst_i,
+    input data_i,
     output [7:0] outputs_o
 );
 
@@ -14,7 +15,7 @@ initial begin
     #1;
 end
 
-wire [7:0] inputs = {6'b0, rst_i, clk_i};
+wire [7:0] inputs = {5'b0, data_i, rst_i, clk_i};
 
 // instantiate the DUT
 jmw95_top jmw95_top(

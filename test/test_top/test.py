@@ -1,22 +1,33 @@
+from pathlib import Path
+
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import RisingEdge, FallingEdge, Timer, ClockCycles
+from cocotb.triggers import ClockCycles
 
 
-@cocotb.test()
-async def test_tmp(dut):
+DATA_FILE = Path(__file__).resolve().parent.parent.parent / "notebooks" / "test_data.csv"
+
+
+async def setup(dut):
     clock = Clock(dut.clk_i, 10, units="us")
     cocotb.start_soon(clock.start())
+
+    dut.data_i.value = 0
 
     dut.rst_i.value = 1
     await ClockCycles(dut.clk_i, 10)
     dut.rst_i.value = 0
-
     await ClockCycles(dut.clk_i, 1)
-    prev = dut.outputs_o.value
 
-    for i in range(10):
+
+@cocotb.test()
+async def test_top(dut):
+    await setup(dut)
+
+    with open(DATA_FILE, "r") as f:
+        data_samples = [int(line.strip()) for line in f]
+
+    for sample in data_samples:
+        dut.data_i.value = sample
+
         await ClockCycles(dut.clk_i, 1)
-        now = dut.outputs_o.value
-        assert int(now) == (not int(prev))
-        prev = now

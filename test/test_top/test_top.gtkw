@@ -1,0 +1,41 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sun Mar 19 15:16:40 2023
+[*]
+[dumpfile] "\\wsl$\ubuntu\home\daniel\code\tinytapeout\tt03-msf-clock\test\test_top\tb.vcd"
+[dumpfile_mtime] "Sun Mar 19 15:13:24 2023"
+[dumpfile_size] 10136263
+[savefile] "\\wsl$\ubuntu\home\daniel\code\tinytapeout\tt03-msf-clock\test\test_top\test_top.gtkw"
+[timestart] 0
+[size] 1658 950
+[pos] 351 35
+*-38.000000 228000000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb.
+[treeopen] tb.jmw95_top.
+[sst_width] 197
+[signals_width] 190
+[sst_expanded] 1
+[sst_vpaned_height] 276
+@22
+tb.jmw95_top.io_in[7:0]
+@28
+tb.jmw95_top.clk
+tb.jmw95_top.rst
+tb.jmw95_top.data
+@200
+-
+@22
+tb.jmw95_top.io_out[7:0]
+@200
+-
+@28
+tb.jmw95_top.sample_valid
+tb.jmw95_top.sample_data
+@200
+-
+@28
+tb.jmw95_top.bits_valid
+tb.jmw95_top.bits_is_second_00
+tb.jmw95_top.bits_data[1:0]
+[pattern_trace] 1
+[pattern_trace] 0

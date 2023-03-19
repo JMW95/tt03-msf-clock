@@ -10,7 +10,11 @@ ifneq ($(GATES),yes)
 
 # this is the only part you should need to modify:
 SRC = $(PWD)/../../src/
-VERILOG_SOURCES += $(PWD)/tb.v $(SRC)/jmw95_top.v
+VERILOG_SOURCES += \
+	$(PWD)/tb.v \
+	$(SRC)/jmw95_top.v \
+	$(SRC)/bit_sampler.v \
+	$(SRC)/decoder.v
 
 else
 

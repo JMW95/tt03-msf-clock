@@ -7,8 +7,8 @@ sim_build
 __pycache__/
 results.xml
 src/user_config.tcl
-.venv
-tt-support-tools
-OpenLane
-PDK
-gds_render*
+.venv/
+tt-support-tools/
+OpenLane/
+PDK/
+GDS2glTF/

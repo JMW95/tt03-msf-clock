@@ -12,3 +12,4 @@ tt-support-tools/
 OpenLane/
 PDK/
 GDS2glTF/
+test/test_top/gate_level_netlist.v

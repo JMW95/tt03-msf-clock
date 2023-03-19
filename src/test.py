@@ -12,9 +12,11 @@ async def test_tmp(dut):
     await ClockCycles(dut.clk_i, 10)
     dut.rst_i.value = 0
 
-    prev = dut.outputs_o.value
     await ClockCycles(dut.clk_i, 1)
+    prev = dut.outputs_o.value
 
     for i in range(10):
         await ClockCycles(dut.clk_i, 1)
-        assert int(dut.outputs_o.value) == (not prev)
+        now = dut.outputs_o.value
+        assert int(now) == (not int(prev))
+        prev = now

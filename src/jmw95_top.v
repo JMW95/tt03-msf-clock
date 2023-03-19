@@ -10,7 +10,7 @@ wire reset = io_in[1];
 
 reg  toggle_reg;
 
-assign io_out = { toggle_reg, 7'b0 };
+assign io_out = { 7'b0, toggle_reg };
 
 always @(posedge clk) begin
     if (reset) begin

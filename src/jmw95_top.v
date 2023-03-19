@@ -76,8 +76,8 @@ digits digits (
     .hour_l_load_i   (hour_l),
     .minute_h_load_i (minute_h),
     .minute_l_load_i (minute_l),
-    .second_h_load_i (0),
-    .second_l_load_i (0)
+    .second_h_load_i (3'h0),
+    .second_l_load_i (4'h0)
 );
 
 endmodule

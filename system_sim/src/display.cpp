@@ -4,6 +4,12 @@
 #include <cstdio>
 
 
+Display::Display()
+{
+    std::puts("\033[2J");
+}
+
+
 void Display::update(bool sclk, bool data, bool latch)
 {
     // Shift data in on rising edges of sclk
@@ -80,6 +86,8 @@ void Display::print()
             set(4, 5);
         }
     }
+
+    std::puts("\033[2H");
 
     for (size_t x = 0; x < WIDTH + 2; x++) {
         std::putchar('*');

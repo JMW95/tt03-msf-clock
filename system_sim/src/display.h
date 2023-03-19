@@ -7,6 +7,7 @@
 class Display
 {
 public:
+    Display();
     void update(bool sclk, bool data, bool latch);
     void print();
 

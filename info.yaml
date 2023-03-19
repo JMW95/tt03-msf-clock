@@ -1,9 +1,9 @@
---- 
+---
 # TinyTapeout project information
 project:
   wokwi_id:    0        # If using wokwi, set this to your project's ID
 
-# If using an HDL, set wokwi_id as 0 and uncomment and list your source files here. 
+# If using an HDL, set wokwi_id as 0 and uncomment and list your source files here.
 # Source files must be in ./src and you must list each source file separately
 #  source_files:        
 #    - counter.v
@@ -32,7 +32,7 @@ documentation:
       Explain how to test your project
 
 # A description of what the inputs do
-  inputs:               
+  inputs:
     - clock
     - reset
     - none

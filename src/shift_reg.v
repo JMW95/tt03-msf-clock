@@ -14,11 +14,13 @@ module shift_reg #(
     output              latch_o
 );
 
-reg                       data_reg;
-reg                       sclk_reg;
-reg                       idle_reg;
-reg                       latch_reg;
-reg [$clog2(WIDTH) - 1:0] count_reg;
+localparam COUNT_WIDTH = $clog2(WIDTH);
+
+reg                     data_reg;
+reg                     sclk_reg;
+reg                     idle_reg;
+reg                     latch_reg;
+reg [COUNT_WIDTH - 1:0] count_reg;
 
 wire data_next;
 
@@ -37,7 +39,7 @@ always @(posedge clk_i) begin
     end else if (start_i) begin
         idle_reg  <= 1'b0;
         latch_reg <= 1'b0;
-        count_reg <= WIDTH - 1;
+        count_reg <= COUNT_WIDTH'(WIDTH) - 1;
     end else if (!idle_reg) begin
         if (sclk_reg == 1'b1) begin
             sclk_reg <= 1'b0;

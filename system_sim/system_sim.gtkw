@@ -1,0 +1,74 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sun Mar 19 22:03:41 2023
+[*]
+[dumpfile] "\\wsl$\ubuntu\home\daniel\code\tinytapeout\tt03-msf-clock\system_sim\logs\dump.vcd"
+[dumpfile_mtime] "Sun Mar 19 22:03:11 2023"
+[dumpfile_size] 601326
+[savefile] "\\wsl$\ubuntu\home\daniel\code\tinytapeout\tt03-msf-clock\system_sim\system_sim.gtkw"
+[timestart] 0
+[size] 1866 831
+[pos] -1 -1
+*-11.000000 3117 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[sst_width] 197
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 234
+@28
+TOP.jmw95_top.clk
+TOP.jmw95_top.rst
+TOP.jmw95_top.data
+@200
+-
+@28
+TOP.jmw95_top.sample_valid
+TOP.jmw95_top.sample_data
+@200
+-
+@28
+TOP.jmw95_top.bits_valid
+TOP.jmw95_top.bits_data[1:0]
+TOP.jmw95_top.bits_is_second_00
+@200
+-
+@28
+TOP.jmw95_top.time_load
+TOP.jmw95_top.hour_h[1:0]
+@22
+TOP.jmw95_top.hour_l[3:0]
+@28
+TOP.jmw95_top.minute_h[2:0]
+@22
+TOP.jmw95_top.minute_l[3:0]
+@28
+TOP.jmw95_top.sec_h_digit[2:0]
+@22
+TOP.jmw95_top.sec_l_digit[3:0]
+@200
+-
+-
+@28
+TOP.jmw95_top.hour_h_digit[1:0]
+@22
+TOP.jmw95_top.hour_l_digit[3:0]
+@28
+TOP.jmw95_top.min_h_digit[2:0]
+@22
+TOP.jmw95_top.min_l_digit[3:0]
+@28
+TOP.jmw95_top.sec_h_digit[2:0]
+@22
+TOP.jmw95_top.sec_l_digit[3:0]
+@200
+-
+@22
+TOP.jmw95_top.seven_seg[41:0]
+@200
+-
+@28
+TOP.jmw95_top.shift_reg_sclk
+TOP.jmw95_top.shift_reg_data
+TOP.jmw95_top.shift_reg_latch
+[pattern_trace] 1
+[pattern_trace] 0

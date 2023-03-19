@@ -12,7 +12,7 @@ always @(*) begin
         4'd2:    seven_seg_o = 7'b1011011;
         4'd3:    seven_seg_o = 7'b1001111;
         4'd4:    seven_seg_o = 7'b1100110;
-        4'd5:    seven_seg_o = 7'b1101100;
+        4'd5:    seven_seg_o = 7'b1101101;
         4'd6:    seven_seg_o = 7'b1111101;
         4'd7:    seven_seg_o = 7'b0000111;
         4'd8:    seven_seg_o = 7'b1111111;

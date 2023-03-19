@@ -56,6 +56,6 @@ end
 
 assign bits_valid_o        = (state_reg == STATE_IDLE) && sample_valid_i && is_valid;
 assign bits_is_second_00_o = is_second_00;
-assign bits_data_o         = data_reg[2:1];
+assign bits_data_o         = ~data_reg[2:1];
 
 endmodule

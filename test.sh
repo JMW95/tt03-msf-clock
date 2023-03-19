@@ -14,5 +14,5 @@ if ! which cocotb-config; then
 fi
 
 # Run tests
-cd src
+cd test
 make

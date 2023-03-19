@@ -3,6 +3,7 @@ TOP_TEST = test_top
 SUBMODULE_TESTS = \
     test_bit_sampler \
     test_decoder \
+    test_time_date_decoder \
     test_digit
 
 ALL_TESTS = $(TOP_TEST) $(SUBMODULE_TESTS)

@@ -130,8 +130,9 @@ int main(int argc, char **argv)
         asic.eval(); // Clock falling edge
 
         if (tfp) {
-            tfp->dump(t++);
+            tfp->dump(t);
         }
+        t++;
 
         asic.set_clk(true);
         asic.eval(); // Clock rising edge
@@ -145,8 +146,9 @@ int main(int argc, char **argv)
         }
 
         if (tfp) {
-            tfp->dump(t++);
+            tfp->dump(t);
         }
+        t++;
     }
 
     if (tfp) {

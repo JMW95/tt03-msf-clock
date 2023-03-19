@@ -8,7 +8,7 @@ DATA_FILE = Path(__file__).resolve().parent.parent.parent / "notebooks" / "test_
 
 
 @cocotb.test()
-async def test_tmp(dut):
+async def test_bit_sampler(dut):
     clock = Clock(dut.clk_i, 10, units="us")
     cocotb.start_soon(clock.start())
 

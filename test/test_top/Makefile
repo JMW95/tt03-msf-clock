@@ -13,11 +13,14 @@ SRC = $(PWD)/../../src/
 VERILOG_SOURCES += \
 	$(PWD)/tb.v \
 	$(SRC)/jmw95_top.v \
-	$(SRC)/bit_sampler.v \
-	$(SRC)/decoder.v \
-	$(SRC)/time_date_decoder.v \
-	$(SRC)/digits.v \
-	$(SRC)/digit.v
+    $(SRC)/bcd_to_seven_seg.v \
+    $(SRC)/bit_sampler.v \
+    $(SRC)/decoder.v \
+    $(SRC)/digit.v \
+    $(SRC)/digits.v \
+    $(SRC)/seven_seg_hms.v \
+    $(SRC)/shift_reg.v \
+    $(SRC)/time_date_decoder.v
 
 else
 

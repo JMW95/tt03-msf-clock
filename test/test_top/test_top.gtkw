@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Sun Mar 19 15:16:40 2023
+[*] Sun Mar 19 18:37:00 2023
 [*]
 [dumpfile] "tb.vcd"
-[dumpfile_mtime] "Sun Mar 19 15:13:24 2023"
-[dumpfile_size] 10136263
+[dumpfile_mtime] "Sun Mar 19 18:32:20 2023"
+[dumpfile_size] 10168654
 [savefile] "test_top.gtkw"
 [timestart] 0
 [size] 1658 950
-[pos] 351 35
-*-38.000000 228000000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] 614 -93
+*-38.000000 612000000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] tb.
 [treeopen] tb.jmw95_top.
 [sst_width] 197
@@ -37,5 +37,23 @@ tb.jmw95_top.sample_data
 tb.jmw95_top.bits_valid
 tb.jmw95_top.bits_is_second_00
 tb.jmw95_top.bits_data[1:0]
+@200
+-
+@28
+tb.jmw95_top.hour_h_digit[1:0]
+@22
+tb.jmw95_top.hour_l_digit[3:0]
+@28
+tb.jmw95_top.min_h_digit[2:0]
+@22
+tb.jmw95_top.min_l_digit[3:0]
+@28
+tb.jmw95_top.sec_h_digit[2:0]
+@22
+tb.jmw95_top.sec_l_digit[3:0]
+@200
+-
+@29
+tb.jmw95_top.time_load
 [pattern_trace] 1
 [pattern_trace] 0

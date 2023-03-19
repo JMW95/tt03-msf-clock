@@ -26,7 +26,7 @@ wire [2:0]  minute_h;
 wire [3:0]  minute_l;
 wire        time_load;
 
-// digits <-> ?
+// digits <-> seven_seg_hms
 wire [1:0] hour_h_digit;
 wire [3:0] hour_l_digit;
 wire [2:0] min_h_digit;
@@ -34,8 +34,14 @@ wire [3:0] min_l_digit;
 wire [2:0] sec_h_digit;
 wire [3:0] sec_l_digit;
 
+// seven_seg_hms <-> shift_reg
+wire [7 * 6 - 1:0] seven_seg;
+
 // Outputs
-assign io_out = {4'b0, minute_l};
+wire shift_reg_sclk;
+wire shift_reg_data;
+wire shift_reg_latch;
+assign io_out = {5'b0, shift_reg_latch, shift_reg_data, shift_reg_sclk};
 
 bit_sampler bit_sampler (
     .clk_i   (clk),
@@ -92,6 +98,28 @@ digits digits (
     .minute_l_load_i (minute_l),
     .second_h_load_i (3'h0),
     .second_l_load_i (4'h0)
+);
+
+seven_seg_hms seven_seg_hms (
+    .hour_h_digit_i  (hour_h_digit),
+    .hour_l_digit_i  (hour_l_digit),
+    .min_h_digit_i   (min_h_digit),
+    .min_l_digit_i   (min_l_digit),
+    .sec_h_digit_i   (sec_h_digit),
+    .sec_l_digit_i   (sec_l_digit),
+    .seven_seg_hms_o (seven_seg)
+);
+
+shift_reg #(.WIDTH(7 * 6)) shift_reg (
+    .clk_i   (clk),
+    .rst_i   (rst),
+
+    .start_i (bits_valid),  // TODO: We should wait for the digits to update first!
+    .data_i  (seven_seg),
+
+    .sclk_o  (shift_reg_sclk),
+    .data_o  (shift_reg_data),
+    .latch_o (shift_reg_latch)
 );
 
 endmodule

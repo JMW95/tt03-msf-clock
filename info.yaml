@@ -7,11 +7,14 @@ project:
   # Source files must be in ./src and you must list each source file separately
   source_files:
     - jmw95_top.v
+    - bcd_to_seven_seg.v
     - bit_sampler.v
     - decoder.v
-    - time_date_decoder.v
     - digit.v
     - digits.v
+    - seven_seg_hms.v
+    - shift_reg.v
+    - time_date_decoder.v
   top_module:  "jmw95_top"      # put the name of your top module here, make it unique by prepending your github username
 
 # Keep a track of the submission yaml

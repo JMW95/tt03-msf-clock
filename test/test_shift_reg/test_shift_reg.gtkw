@@ -1,0 +1,35 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sun Mar 19 20:07:18 2023
+[*]
+[dumpfile] "tb.vcd"
+[dumpfile_mtime] "Sun Mar 19 20:02:40 2023"
+[dumpfile_size] 5505
+[savefile] "test_shift_reg.gtkw"
+[timestart] 0
+[size] 1867 1008
+[pos] -1 -1
+*-28.000000 1070000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb.
+[sst_width] 197
+[signals_width] 126
+[sst_expanded] 1
+[sst_vpaned_height] 296
+@28
+tb.clk_i
+tb.rst_i
+@200
+-
+@28
+tb.start_i
+@22
+tb.data_i[47:0]
+@200
+-
+@29
+tb.sclk_o
+@28
+tb.data_o
+tb.latch_o
+[pattern_trace] 1
+[pattern_trace] 0

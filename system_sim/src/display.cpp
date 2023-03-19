@@ -34,7 +34,7 @@ void Display::print()
     const size_t DIGIT_WIDTH = 7;
     const size_t DIGIT_HEIGHT = 11;
 
-    const size_t WIDTH = DIGIT_WIDTH * NUM_DIGITS;
+    const size_t WIDTH = DIGIT_WIDTH * NUM_DIGITS + 2;
     const size_t HEIGHT = DIGIT_HEIGHT;
     std::array<uint8_t, WIDTH * HEIGHT> pixels{};
 
@@ -45,10 +45,14 @@ void Display::print()
         pixels[(base_x + x) + (base_y + y) * WIDTH] = 1;
     };
 
+    // Draw the ':'s in
+    set(14, 3);
+    set(14, 7);
+    set(29, 3);
+    set(29, 7);
+
     for (size_t digit = 0; digit < NUM_DIGITS; digit++) {
         uint8_t code = m_digits[digit];
-        base_x = DIGIT_WIDTH * digit;
-        base_y = 0;
 
         if (code & 1) {
             set(2, 1);
@@ -85,6 +89,8 @@ void Display::print()
             set(3, 5);
             set(4, 5);
         }
+
+        base_x += DIGIT_WIDTH + (digit % 2); // Add an extra column after every other digit for the ':'
     }
 
     std::puts("\033[2H");

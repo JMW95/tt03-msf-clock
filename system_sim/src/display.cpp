@@ -95,25 +95,13 @@ void Display::print()
 
     std::puts("\033[2H");
 
-    for (size_t x = 0; x < WIDTH + 2; x++) {
-        std::putchar('*');
-    }
-    std::putchar('\n');
-
     for (size_t y = 0; y < HEIGHT; y++) {
-        std::putchar('*');
         for (size_t x = 0; x < WIDTH; x++) {
             char c = pixels[x + y * WIDTH] ? '#' : ' ';
             std::putchar(c);
         }
-        std::putchar('*');
         std::putchar('\n');
     }
-
-    for (size_t x = 0; x < WIDTH + 2; x++) {
-        std::putchar('*');
-    }
-    std::putchar('\n');
 
     std::putchar('\n');
 }

@@ -22,7 +22,6 @@ module digits (
     input [3:0]  second_l_load_i
 );
 
-
 wire hour_l_ovf;
 wire min_h_ovf;
 wire min_l_ovf;

@@ -5,6 +5,9 @@
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 
+# normal simulation
+ifneq ($(GATES),yes)
+
 # this is the only part you should need to modify:
 SRC = $(PWD)/../../src/
 VERILOG_SOURCES += $(PWD)/tb.v $(SRC)/decoder.v
@@ -17,3 +20,5 @@ MODULE = test
 
 # include cocotb's make rules to take care of the simulator setup
 include $(shell cocotb-config --makefiles)/Makefile.sim
+
+endif

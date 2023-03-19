@@ -9,11 +9,13 @@ module tb (
     output [7:0] outputs_o
 );
 
-initial begin
-    $dumpfile ("tb.vcd");
-    $dumpvars (0, tb);
-    #1;
-end
+`ifdef __ICARUS__
+    initial begin
+        $dumpfile ("tb.vcd");
+        $dumpvars (0, tb);
+        #1;
+    end
+`endif
 
 wire [7:0] inputs = {5'b0, data_i, rst_i, clk_i};
 

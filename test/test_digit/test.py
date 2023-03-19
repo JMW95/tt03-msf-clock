@@ -41,12 +41,12 @@ async def setup(dut):
 
 
 async def run_counter(dut, start, count):
-    dut.load_hour_msd_i.value = start.hour // 10
-    dut.load_hour_lsd_i.value = start.hour % 10
-    dut.load_min_msd_i.value  = start.min // 10
-    dut.load_min_lsd_i.value  = start.min % 10
-    dut.load_sec_msd_i.value  = start.sec // 10
-    dut.load_sec_lsd_i.value  = start.sec % 10
+    dut.load_hour_h_i.value = start.hour // 10
+    dut.load_hour_l_i.value = start.hour % 10
+    dut.load_min_h_i.value  = start.min // 10
+    dut.load_min_l_i.value  = start.min % 10
+    dut.load_sec_h_i.value  = start.sec // 10
+    dut.load_sec_l_i.value  = start.sec % 10
 
     dut.load_i.value = 1
     await ClockCycles(dut.clk_i, 10)
@@ -63,9 +63,9 @@ async def run_counter(dut, start, count):
         expected.append(t)
         t = t.inc()
 
-        h = dut.digit_hour_msd_o.value * 10 + dut.digit_hour_lsd_o.value
-        m = dut.digit_min_msd_o.value * 10 + dut.digit_min_lsd_o.value
-        s = dut.digit_sec_msd_o.value * 10 + dut.digit_sec_lsd_o.value
+        h = dut.digit_hour_h_o.value * 10 + dut.digit_hour_l_o.value
+        m = dut.digit_min_h_o.value * 10 + dut.digit_min_l_o.value
+        s = dut.digit_sec_h_o.value * 10 + dut.digit_sec_l_o.value
         values.append(Time(h, m, s))
 
         dut.inc_i.value = 1

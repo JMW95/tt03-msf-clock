@@ -12,7 +12,6 @@ module digit #(
     input                at_max_i,
 
     input                inc_i,
-    input                ovf_i,
     output               ovf_o,
 
     input                load_i,

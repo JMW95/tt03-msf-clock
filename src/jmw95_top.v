@@ -26,6 +26,14 @@ wire [2:0]  minute_h;
 wire [3:0]  minute_l;
 wire        time_load;
 
+// digits <-> ?
+wire [1:0] hour_h_digit;
+wire [3:0] hour_l_digit;
+wire [2:0] min_h_digit;
+wire [3:0] min_l_digit;
+wire [2:0] sec_h_digit;
+wire [3:0] sec_l_digit;
+
 // Outputs
 assign io_out = {4'b0, minute_l};
 
@@ -71,6 +79,12 @@ digits digits (
     .clk_i           (clk),
     .rst_i           (rst),
     .inc_i           (bits_valid),
+    .hour_h_digit_o  (hour_h_digit),
+    .hour_l_digit_o  (hour_l_digit),
+    .min_h_digit_o   (min_h_digit),
+    .min_l_digit_o   (min_l_digit),
+    .sec_h_digit_o   (sec_h_digit),
+    .sec_l_digit_o   (sec_l_digit),
     .load_i          (time_load),
     .hour_h_load_i   (hour_h),
     .hour_l_load_i   (hour_l),

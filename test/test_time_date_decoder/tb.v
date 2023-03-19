@@ -29,11 +29,13 @@ module tb (
     output valid_o
 );
 
-initial begin
-    $dumpfile ("tb.vcd");
-    $dumpvars (0, tb);
-    #1;
-end
+`ifdef __ICARUS__
+    initial begin
+        $dumpfile ("tb.vcd");
+        $dumpvars (0, tb);
+        #1;
+    end
+`endif
 
 // instantiate the DUT
 time_date_decoder time_date_decoder(

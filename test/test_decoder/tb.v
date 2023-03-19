@@ -12,11 +12,13 @@ module tb (
     output [1:0] bits_data_o
 );
 
-initial begin
-    $dumpfile ("tb.vcd");
-    $dumpvars (0, tb);
-    #1;
-end
+`ifdef __ICARUS__
+    initial begin
+        $dumpfile ("tb.vcd");
+        $dumpvars (0, tb);
+        #1;
+    end
+`endif
 
 decoder decoder (
     .clk_i               (clk_i),

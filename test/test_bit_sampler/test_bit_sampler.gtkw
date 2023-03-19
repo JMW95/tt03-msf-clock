@@ -1,0 +1,40 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Sun Mar 19 15:20:03 2023
+[*]
+[dumpfile] "tb.vcd"
+[dumpfile_mtime] "Sun Mar 19 15:16:38 2023"
+[dumpfile_size] 5809805
+[savefile] "test_bit_sampler.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] 575 141
+*-38.741352 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb.
+[sst_width] 233
+[signals_width] 142
+[sst_expanded] 1
+[sst_vpaned_height] 144
+@28
+tb.bit_sampler.clk_i
+tb.bit_sampler.rst_i
+@200
+-
+@28
+tb.bit_sampler.data_i
+@200
+-
+@28
+tb.bit_sampler.valid_o
+tb.bit_sampler.bit_o
+@200
+-
+@28
+tb.bit_sampler.last_data_reg
+@22
+tb.bit_sampler.count_reg[6:0]
+@28
+tb.bit_sampler.bit_reg
+tb.bit_sampler.valid_reg
+[pattern_trace] 1
+[pattern_trace] 0

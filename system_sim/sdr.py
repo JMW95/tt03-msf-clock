@@ -18,7 +18,7 @@ async def amain():
     async def do_ping(ws):
         try:
             while True:
-                await asyncio.sleep(10)
+                await asyncio.sleep(5)
                 await ws.send("SET keepalive")
         except asyncio.CancelledError:
             pass
@@ -70,7 +70,7 @@ async def amain():
             await handle_snd(msg[3:], ws)
 
     try:
-        async with websockets.connect(f"ws://{host}:{port}/kiwi/{int(time.time())}/SND", close_timeout=0) as ws:
+        async with websockets.connect(f"ws://{host}:{port}/kiwi/{int(time.time())}/SND", close_timeout=0, ping_interval=None) as ws:
             ping_task = asyncio.create_task(do_ping(ws))
             await ws.send("SET auth t=kiwi p=#")
 

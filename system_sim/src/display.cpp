@@ -55,39 +55,53 @@ void Display::print()
         uint8_t code = m_digits[digit];
 
         if (code & 1) {
+            set(1, 1);
             set(2, 1);
             set(3, 1);
             set(4, 1);
+            set(5, 1);
         }
         if (code & 2) {
+            set(5, 1);
             set(5, 2);
             set(5, 3);
             set(5, 4);
+            set(5, 5);
         }
         if (code & 4) {
+            set(5, 5);
             set(5, 6);
             set(5, 7);
             set(5, 8);
+            set(5, 9);
         }
         if (code & 8) {
+            set(1, 9);
             set(2, 9);
             set(3, 9);
             set(4, 9);
+            set(5, 9);
         }
         if (code & 16) {
+            set(1, 5);
             set(1, 6);
             set(1, 7);
             set(1, 8);
+            set(1, 9);
         }
         if (code & 32) {
+            set(1, 1);
             set(1, 2);
             set(1, 3);
             set(1, 4);
+            set(1, 5);
         }
         if (code & 64) {
+            set(1, 5);
             set(2, 5);
             set(3, 5);
             set(4, 5);
+            set(5, 5);
         }
 
         base_x += DIGIT_WIDTH + (digit % 2); // Add an extra column after every other digit for the ':'

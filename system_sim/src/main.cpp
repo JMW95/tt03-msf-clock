@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <iostream>
 
 #include "asic.h"
 #include "display.h"
@@ -96,6 +97,23 @@ bool FileDataSource::done() const
     return m_idx >= m_samples.size();
 }
 
+class StdinDataSource : public IDataSource
+{
+public:
+    bool next_sample() override
+    {
+        std::string line;
+        std::getline(std::cin, line);
+        auto val = std::stoi(line);
+        return val == 1;
+    }
+
+    bool done() const override
+    {
+        return false;
+    }
+};
+
 
 int main(int argc, char **argv)
 {
@@ -103,7 +121,7 @@ int main(int argc, char **argv)
 
     Asic asic{};
     Display display{};
-    FileDataSource data_source("../notebooks/test_data.csv");
+    StdinDataSource data_source{};
 
     std::unique_ptr<VerilatedVcdC> tfp{};
     const char *flag = Verilated::commandArgsPlusMatch("trace");

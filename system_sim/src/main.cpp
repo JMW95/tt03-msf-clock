@@ -1,177 +1,92 @@
-#include <cstdio>
-#include <memory>
-#include <verilated.h>
-#include <verilated_vcd_c.h>
 #include <chrono>
-#include <thread>
-#include <string>
-#include <vector>
 #include <fstream>
-#include <iostream>
-
-#include "asic.h"
-#include "display.h"
+#include <memory>
+#include <string>
+#include <thread>
+#include <verilated.h>
+#include "system.h"
 
 
 using namespace std::chrono_literals;
 
 
+static const char USAGE[] = "usage: system_sim [-h] [--trace] [--throttle] [data_source]";
+static const char HELP[] =
+    "Full system simulation\n"
+    "\n"
+    "positional arguments:\n"
+    "    data_source  path to CSV file to use for input data, or '-' to use stdin\n"
+    "\n"
+    "optional arguments:\n"
+    "    -h, --help   show this help message and exit\n"
+    "    --trace      enable tracing and save to a '.gtkw' file\n"
+    "    --throttle   throttle the data source to run in real time";
 
-class IDataSource
+
+struct CommandLineArgs
 {
-public:
-    virtual ~IDataSource() {};
-    virtual bool next_sample() = 0;
-    virtual bool done() const = 0;
+    bool trace = false;
+    bool throttle = false;
+    std::shared_ptr<DataSource> data_source = DataSource::from_sim();
 };
 
 
-class DumbDataSource : public IDataSource
+CommandLineArgs parse_args(int argc, char **argv)
 {
-public:
-    bool next_sample() override;
-    bool done() const override;
-    uint64_t m_idx = 0;
-};
+    CommandLineArgs args;
 
+    Verilated::commandArgs(argc, argv);
 
-bool DumbDataSource::next_sample()
-{
-    m_idx++;
-    return (m_idx % 1000) > 100;
-}
+    for (int i = 1; i < argc; i++) {
+        std::string arg = argv[i];
 
+        if (arg.size() > 0 && arg[0] == '+') {
+            // Arguments starting with '+' are for Verilator
+        } else if (arg == "-h" || arg == "--help") {
+            printf("%s\n\n%s\n", USAGE, HELP);
+            std::exit(0);
+        } else if (arg == "--trace") {
+            args.trace = true;
+        } else if (arg == "--throttle") {
+            args.throttle = true;
+        } else if (arg == "-") {
+            args.data_source = DataSource::from_stdin();
+        } else if (arg.size() > 0 && arg[0] == '-') {
+            std::fprintf(stderr, "error: unrecognised option '%s'\n", arg.c_str());
+            std::fprintf(stderr, "%s\n", USAGE);
+            std::exit(1);
+        } else {
+            if (!std::ifstream{arg}.good()) {
+                std::fprintf(stderr, "error: cannot open '%s'\n", arg.c_str());
+                std::exit(1);
+            }
 
-bool DumbDataSource::done() const
-{
-    return false;
-}
-
-
-class FileDataSource : public IDataSource
-{
-public:
-    FileDataSource(std::string path);
-    bool next_sample() override;
-    bool done() const override;
-private:
-    size_t m_idx = 0;
-    std::vector<uint8_t> m_samples;
-};
-
-
-FileDataSource::FileDataSource(std::string path)
-{
-    std::ifstream f{path};
-
-    if (!f) {
-        std::fprintf(stderr, "ERROR: Failed to open file %s\n", path.c_str());
-        std::exit(1);
-    }
-
-    std::string line;
-    while (std::getline(f, line)) {
-        try {
-            m_samples.push_back(std::stoi(line));
-        } catch(std::exception const&) {
-            std::fprintf(stderr, "ERROR: Failed to parse line\n");
-            exit(1);
+            args.data_source = DataSource::from_file(arg);
         }
     }
+
+    return args;
 }
-
-
-bool FileDataSource::next_sample()
-{
-    if (m_idx < m_samples.size())
-    {
-        return m_samples[m_idx++];
-    }
-
-    return 0;
-}
-
-
-bool FileDataSource::done() const
-{
-    return m_idx >= m_samples.size();
-}
-
-class StdinDataSource : public IDataSource
-{
-public:
-    bool next_sample() override
-    {
-        std::string line;
-        std::getline(std::cin, line);
-        auto val = std::stoi(line);
-        return val == 1;
-    }
-
-    bool done() const override
-    {
-        return false;
-    }
-};
 
 
 int main(int argc, char **argv)
 {
-    Verilated::commandArgs(argc, argv);
+    CommandLineArgs args = parse_args(argc, argv);
 
-    Asic asic{};
-    Display display{};
-    StdinDataSource data_source{};
+    System system{args.data_source};
 
-    std::unique_ptr<VerilatedVcdC> tfp{};
-    const char *flag = Verilated::commandArgsPlusMatch("trace");
-    if (flag && std::strcmp(flag, "+trace") == 0) {
-        Verilated::traceEverOn(true);
-        tfp = std::make_unique<VerilatedVcdC>();
-        asic.trace(tfp.get());
-        Verilated::mkdir("logs");
-        tfp->open("logs/dump.vcd");
+    if (args.trace) {
+        system.trace();
     }
 
-    // TODO: This code is a total mess! Please re-write me
+    auto start_t = std::chrono::system_clock::now();
 
-    auto real_t = std::chrono::steady_clock::now();
-
-    asic.set_rst(true);
-
-    uint64_t t = 0;
-    while (!data_source.done()) {
-        real_t += 1ms;
-        std::this_thread::sleep_until(real_t);
-
-        asic.set_clk(false);
-        asic.eval(); // Clock falling edge
-
-        if (tfp) {
-            tfp->dump(t);
-        }
-        t++;
-
-        asic.set_clk(true);
-        asic.eval(); // Clock rising edge
-
-        display.update(asic.shift_reg_sclk(), asic.shift_reg_data(), asic.shift_reg_latch());
-        display.print();
-
-        asic.set_data(data_source.next_sample());
-        if (t > 10) {
-            asic.set_rst(false);
+    while (!args.data_source->done()) {
+        if (args.throttle) {
+            std::this_thread::sleep_until(start_t + system.time_ns() * 1ns);
         }
 
-        if (tfp) {
-            tfp->dump(t);
-        }
-        t++;
-    }
-
-    if (tfp) {
-        tfp->close();
-        tfp = nullptr;
+        system.update();
     }
 
     return 0;

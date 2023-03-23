@@ -2,13 +2,14 @@
 
 #include <array>
 #include <cstdint>
+#include "signals.h"
 
 
 class Display
 {
 public:
     Display();
-    void update(bool sclk, bool data, bool latch);
+    void update(Signals const& signals, Signals& next);
     void print();
 
 private:
@@ -17,4 +18,6 @@ private:
 
     bool m_prev_sclk = 0;
     uint64_t m_shift_reg = 0;
+    uint64_t m_latched_shift_reg = 0;
+    bool m_dirty = true;
 };

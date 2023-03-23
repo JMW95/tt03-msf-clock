@@ -1,25 +1,29 @@
-#include "display.h"
 #include <algorithm>
 #include <cstddef>
 #include <cstdio>
+#include "display.h"
 
 
 Display::Display()
 {
+    // Clear the screen
     std::puts("\033[2J");
 }
 
 
-void Display::update(bool sclk, bool data, bool latch)
+void Display::update(Signals const& signals, Signals& next)
 {
     // Shift data in on rising edges of sclk
-    if (sclk && !m_prev_sclk) {
-        m_shift_reg = (m_shift_reg << 1) | data;
+    if (signals.shift_reg_sclk && !m_prev_sclk) {
+        m_shift_reg = (m_shift_reg << 1) | signals.shift_reg_data;
     }
 
-    m_prev_sclk = sclk;
+    m_prev_sclk = signals.shift_reg_sclk;
 
-    if (latch) {
+    if (signals.shift_reg_latch && m_latched_shift_reg != m_shift_reg) {
+        m_dirty = true;
+        m_latched_shift_reg = m_shift_reg;
+
         for (size_t i = 0; i < 6; i++) {
             m_digits[5 - i] = (m_shift_reg >> (i * 7)) & 0b1111111;
         }
@@ -29,6 +33,10 @@ void Display::update(bool sclk, bool data, bool latch)
 
 void Display::print()
 {
+    if (!m_dirty) {
+        return;
+    }
+
     const size_t NUM_DIGITS = 6;
 
     const size_t DIGIT_WIDTH = 7;
@@ -118,4 +126,6 @@ void Display::print()
     }
 
     std::putchar('\n');
+
+    m_dirty = false;
 }

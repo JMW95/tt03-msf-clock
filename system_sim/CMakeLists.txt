@@ -13,7 +13,11 @@ find_package(verilator REQUIRED HINTS $ENV{VERILATOR_ROOT})
 add_executable(system_sim
     src/main.cpp
     src/asic.cpp
+    src/clk_and_rst.cpp
+    src/data_source.cpp
     src/display.cpp
+    src/receiver.cpp
+    src/system.cpp
 )
 
 verilate(system_sim

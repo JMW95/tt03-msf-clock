@@ -19,43 +19,16 @@ void Asic::trace(VerilatedVcdC* tfp)
 }
 
 
-void Asic::eval()
+void Asic::update(Signals const& signals, Signals& next)
 {
+    m_top->io_in =
+        (signals.clk << 0) |
+        (signals.rst << 1) |
+        (signals.data << 2);
+
     m_top->eval();
-}
 
-
-void Asic::set_clk(bool value)
-{
-    m_top->io_in = (m_top->io_in & ~(1 << 0)) | (value << 0);
-}
-
-
-void Asic::set_rst(bool value)
-{
-    m_top->io_in = (m_top->io_in & ~(1 << 1)) | (value << 1);
-}
-
-
-void Asic::set_data(bool value)
-{
-    m_top->io_in = (m_top->io_in & ~(1 << 2)) | (value << 2);
-}
-
-
-bool Asic::shift_reg_sclk() const
-{
-    return (m_top->io_out >> 0) & 1;
-}
-
-
-bool Asic::shift_reg_data() const
-{
-    return (m_top->io_out >> 1) & 1;
-}
-
-
-bool Asic::shift_reg_latch() const
-{
-    return (m_top->io_out >> 2) & 1;
+    next.shift_reg_sclk = (m_top->io_out >> 0) & 1;
+    next.shift_reg_data = (m_top->io_out >> 1) & 1;
+    next.shift_reg_latch = (m_top->io_out >> 2) & 1;
 }

@@ -34,178 +34,123 @@ module digits (
     input [3:0]  second_l_load_i
 );
 
-wire year_l_ovf;
-wire month_h_ovf;
-wire month_l_ovf;
-wire day_h_ovf;
-wire day_l_ovf;
-wire hour_h_ovf;
-wire hour_l_ovf;
-wire minute_h_ovf;
-wire minute_l_ovf;
-wire second_h_ovf;
-wire second_l_ovf;
 
-wire month_h_at_max;
-wire day_h_at_max;
-wire hour_h_at_max;
+wire [6:0] year;
+wire [3:0] month;
+wire [4:0] day;
+wire [4:0] hour;
+wire [5:0] minute;
+wire [5:0] second;
+
+wire month_ovf;
+wire day_ovf;
+wire hour_ovf;
+wire minute_ovf;
+wire second_ovf;
+
+wire [4:0] day_max;
+
+days_in_month days_in_month (
+    .month_i         (month),
+    .days_in_month_o (day_max)
+);
 
 // verilator lint_off PINCONNECTEMPTY
 
-// 2-bits
-digit #(.MAX(9)) year_h (
+counter #(.WIDTH(7)) year_counter (
     .clk_i        (clk_i),
     .rst_i        (rst_i),
-    .digit_o      (year_h_digit_o),
-    .at_max_o     (),
-    .at_max_i     (1'b0),
-    .inc_i        (year_l_ovf),
+
+    .min_i        (7'd0),
+    .max_i        (7'd99),
+
+    .value_o      (year),
+
+    .inc_i        (month_ovf),
     .ovf_o        (),
+
     .load_i       (load_i),
-    .load_value_i (year_h_load_i)
+    .load_value_i (load_year_i)
 );
 
-// 4-bits
-digit #(.MAX(9)) year_l (
+counter #(.WIDTH(4)) month_counter (
     .clk_i        (clk_i),
     .rst_i        (rst_i),
-    .digit_o      (year_l_digit_o),
-    .at_max_o     (),
-    .at_max_i     (1'b0),
-    .inc_i        (month_h_ovf),
-    .ovf_o        (year_l_ovf),
+
+    .min_i        (4'd1),
+    .max_i        (4'd12),
+
+    .value_o      (month),
+
+    .inc_i        (day_ovf),
+    .ovf_o        (month_ovf),
+
     .load_i       (load_i),
-    .load_value_i (year_l_load_i)
+    .load_value_i (load_month_i)
 );
 
-// 2-bits
-digit #(.MAX(1)) month_h (
+counter #(.WIDTH(5)) day_counter (
     .clk_i        (clk_i),
     .rst_i        (rst_i),
-    .digit_o      (month_h_digit_o),
-    .at_max_o     (month_h_at_max),
-    .at_max_i     (1'b0),
-    .inc_i        (month_l_ovf),
-    .ovf_o        (month_h_ovf),
+
+    .min_i        (5'd1),
+    .max_i        (day_max),
+
+    .value_o      (day),
+
+    .inc_i        (hour_ovf),
+    .ovf_o        (day_ovf),
+
     .load_i       (load_i),
-    .load_value_i (month_h_load_i)
+    .load_value_i (load_day_i)
 );
 
-// 4-bits
-digit #(.MIN(1), .MAX(9), .MAX2(2)) month_l (
+counter #(.WIDTH(5)) hour_counter (
     .clk_i        (clk_i),
     .rst_i        (rst_i),
-    .digit_o      (month_l_digit_o),
-    .at_max_o     (),
-    .at_max_i     (month_h_at_max),
-    .inc_i        (day_h_ovf),
-    .ovf_o        (month_l_ovf),
+
+    .min_i        (5'd0),
+    .max_i        (5'd23),
+
+    .value_o      (hour),
+
+    .inc_i        (minute_ovf),
+    .ovf_o        (hour_ovf),
+
     .load_i       (load_i),
-    .load_value_i (month_l_load_i)
+    .load_value_i (load_hour_i)
 );
 
-// 2-bits
-digit #(.MAX(3)) day_h (
+counter #(.WIDTH(6)) minute_counter (
     .clk_i        (clk_i),
     .rst_i        (rst_i),
-    .digit_o      (day_h_digit_o),
-    .at_max_o     (day_h_at_max),
-    .at_max_i     (1'b0),
-    .inc_i        (day_l_ovf),
-    .ovf_o        (day_h_ovf),
+
+    .min_i        (6'd0),
+    .max_i        (6'd59),
+
+    .value_o      (minute),
+
+    .inc_i        (second_ovf),
+    .ovf_o        (minute_ovf),
+
     .load_i       (load_i),
-    .load_value_i (day_h_load_i)
+    .load_value_i (load_minute_i)
 );
 
-// 4-bits
-digit #(.MIN(1), .MAX(9), .MAX2(1)) day_l (  // TODO: shorter months
+counter #(.WIDTH(6)) second_counter (
     .clk_i        (clk_i),
     .rst_i        (rst_i),
-    .digit_o      (day_l_digit_o),
-    .at_max_o     (),
-    .at_max_i     (day_h_at_max),
-    .inc_i        (hour_h_ovf),
-    .ovf_o        (day_l_ovf),
-    .load_i       (load_i),
-    .load_value_i (day_l_load_i)
-);
 
-// 2-bits
-digit #(.MAX(2)) hour_h (
-    .clk_i        (clk_i),
-    .rst_i        (rst_i),
-    .digit_o      (hour_h_digit_o),
-    .at_max_o     (hour_h_at_max),
-    .at_max_i     (1'b0),
-    .inc_i        (hour_l_ovf),
-    .ovf_o        (hour_h_ovf),
-    .load_i       (load_i),
-    .load_value_i (hour_h_load_i)
-);
+    .min_i        (6'd0),
+    .max_i        (6'd59),
 
-// 4-bits
-digit #(.MAX(9), .MAX2(3)) hour_l (
-    .clk_i        (clk_i),
-    .rst_i        (rst_i),
-    .digit_o      (hour_l_digit_o),
-    .at_max_o     (),
-    .at_max_i     (hour_h_at_max),
-    .inc_i        (minute_h_ovf),
-    .ovf_o        (hour_l_ovf),
-    .load_i       (load_i),
-    .load_value_i (hour_l_load_i)
-);
+    .value_o      (second),
 
-// 3-bits
-digit #(.MAX(5)) minute_h (
-    .clk_i        (clk_i),
-    .rst_i        (rst_i),
-    .digit_o      (minute_h_digit_o),
-    .at_max_o     (),
-    .at_max_i     (1'b0),
-    .inc_i        (minute_l_ovf),
-    .ovf_o        (minute_h_ovf),
-    .load_i       (load_i),
-    .load_value_i (minute_h_load_i)
-);
-
-// 4-bits
-digit #(.MAX(9)) minute_l (
-    .clk_i        (clk_i),
-    .rst_i        (rst_i),
-    .digit_o      (minute_l_digit_o),
-    .at_max_o     (),
-    .at_max_i     (1'b0),
-    .inc_i        (second_h_ovf),
-    .ovf_o        (minute_l_ovf),
-    .load_i       (load_i),
-    .load_value_i (minute_l_load_i)
-);
-
-// 3-bits
-digit #(.MAX(5)) second_h (
-    .clk_i        (clk_i),
-    .rst_i        (rst_i),
-    .digit_o      (second_h_digit_o),
-    .at_max_o     (),
-    .at_max_i     (1'b0),
-    .inc_i        (second_l_ovf),
-    .ovf_o        (second_h_ovf),
-    .load_i       (load_i),
-    .load_value_i (second_h_load_i)
-);
-
-// 4-bits
-digit #(.MAX(9)) second_l (
-    .clk_i        (clk_i),
-    .rst_i        (rst_i),
-    .digit_o      (second_l_digit_o),
-    .at_max_o     (),
-    .at_max_i     (1'b0),
     .inc_i        (inc_i),
-    .ovf_o        (second_l_ovf),
+    .ovf_o        (second_ovf),
+
     .load_i       (load_i),
-    .load_value_i (second_l_load_i)
+    .load_value_i (load_second_i)
 );
 
 // verilator lint_on PINCONNECTEMPTY

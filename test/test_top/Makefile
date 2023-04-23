@@ -20,7 +20,7 @@ VERILOG_SOURCES += \
     $(SRC)/digits.v \
     $(SRC)/pulse_delay.v \
     $(SRC)/second_counter.v \
-    $(SRC)/seven_seg_hms.v \
+    $(SRC)/seven_seg_digits.v \
     $(SRC)/shift_reg.v \
     $(SRC)/time_date_decoder.v
 

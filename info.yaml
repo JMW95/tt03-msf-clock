@@ -14,7 +14,7 @@ project:
     - digits.v
     - pulse_delay.v
     - second_counter.v
-    - seven_seg_hms.v
+    - seven_seg_digits.v
     - shift_reg.v
     - time_date_decoder.v
   top_module:  "jmw95_top"      # put the name of your top module here, make it unique by prepending your github username

@@ -34,7 +34,7 @@ wire [2:0]  minute_h;
 wire [3:0]  minute_l;
 wire        time_load;
 
-// digits <-> seven_seg_hms
+// digits <-> seven_seg_digits
 wire [1:0] hour_h_digit;
 wire [3:0] hour_l_digit;
 wire [2:0] min_h_digit;
@@ -45,7 +45,7 @@ wire [3:0] sec_l_digit;
 // pulse_delay <-> shift_reg
 wire digits_updated;
 
-// seven_seg_hms <-> shift_reg
+// seven_seg_digits <-> shift_reg
 wire [7 * 6 - 1:0] seven_seg;
 
 // Outputs
@@ -125,14 +125,17 @@ digits digits (
     .second_l_load_i (4'h0)
 );
 
-seven_seg_hms seven_seg_hms (
-    .hour_h_digit_i  (hour_h_digit),
-    .hour_l_digit_i  (hour_l_digit),
-    .min_h_digit_i   (min_h_digit),
-    .min_l_digit_i   (min_l_digit),
-    .sec_h_digit_i   (sec_h_digit),
-    .sec_l_digit_i   (sec_l_digit),
-    .seven_seg_hms_o (seven_seg)
+seven_seg_digits #(.DIGITS(6)) seven_seg_digits (
+    .digits_i ({
+        // Time
+        {2'b0, hour_h_digit},
+        {hour_l_digit},
+        {1'b0, min_h_digit},
+        {min_l_digit},
+        {1'b0, sec_h_digit},
+        {sec_l_digit}
+    }),
+    .seven_seg_o (seven_seg)
 );
 
 pulse_delay #(.DELAY(1)) pulse_delay (

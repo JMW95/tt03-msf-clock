@@ -183,6 +183,7 @@ pulse_delay #(.DELAY(1)) pulse_delay (
 
 // Turn off year display
 wire [83:0] seven_seg_no_year = {seven_seg[83:56], 14'b0, seven_seg[41:0]};
+wire [13:0] unused_seg = seven_seg[55:42];
 
 time_date_shift #(.WIDTH(7 * 12)) time_date_shift (
     .shift_i (shift_date),

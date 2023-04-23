@@ -81,7 +81,7 @@ wire [5:0] minute;
 wire [5:0] second;
 
 wire [8:0] year_o;
-assign {year_h_digit_o, year_l_digit_o}= year_o[7:0];
+assign {year_h_digit_o, year_l_digit_o} = year_o[7:0];
 bin2bcd #(.W(7)) year_bcd_o (
     .bin(year),
     .bcd(year_o)

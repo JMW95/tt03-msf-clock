@@ -1,6 +1,8 @@
 `default_nettype none
 
-module bit_sampler (
+module bit_sampler #(
+    parameter CLK_FREQ = 12500
+) (
     input clk_i,
     input rst_i,
 
@@ -10,10 +12,11 @@ module bit_sampler (
     output valid_o
 );
 
-`define COUNT_HALF 7'd50; // Half-bit period
-`define COUNT_FULL 7'd100; // Full-bit period
+localparam COUNT_HALF = CLK_FREQ / 20; // Half-bit period
+localparam COUNT_FULL = CLK_FREQ / 10; // Full-bit period
+localparam WIDTH = $clog2(COUNT_FULL);
 
-reg [6:0] count_reg;
+reg [WIDTH-1:0] count_reg;
 reg       last_data_reg;
 
 reg valid_reg;
@@ -28,20 +31,20 @@ always @(posedge clk_i) begin
     // Decrement counter and sample at 0
     count_reg <= count_reg - 1;
     if (count_reg == 0) begin
-        count_reg <= `COUNT_FULL;
+        count_reg <= WIDTH'(COUNT_FULL);
         bit_reg <= data_i;
         valid_reg <= 1;
     end
 
     // Reset counter to half-bit on each input edge
     if (data_i != last_data_reg) begin
-        count_reg <= `COUNT_HALF;
+        count_reg <= WIDTH'(COUNT_HALF);
     end
     last_data_reg <= data_i;
 
     // Reset
     if (rst_i) begin
-        count_reg <= `COUNT_HALF;
+        count_reg <= WIDTH'(COUNT_HALF);
         bit_reg <= 0;
         valid_reg <= 0;
     end

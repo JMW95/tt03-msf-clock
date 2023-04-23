@@ -11,6 +11,6 @@ void ClkAndRst::update(Signals const& signals, Signals& next)
 
 uint64_t ClkAndRst::time_ns() const
 {
-    // 1 kHz clock => half clock period = 500_000 ns
-    return m_count * 500000;
+    // 12.5 kHz clock => half clock period = 40_000 ns
+    return m_count * 40000;
 }

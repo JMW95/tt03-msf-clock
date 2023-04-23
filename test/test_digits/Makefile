@@ -10,7 +10,7 @@ ifneq ($(GATES),yes)
 
 # this is the only part you should need to modify:
 SRC = $(PWD)/../../src/
-VERILOG_SOURCES += $(PWD)/tb.v $(SRC)/digits.v $(SRC)/digit.v
+VERILOG_SOURCES += $(PWD)/tb.v $(SRC)/digits.v $(SRC)/days_in_month.v $(SRC)/counter.v $(SRC)/bin2bcd.v $(SRC)/bcd2bin.v
 
 # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
 TOPLEVEL = tb

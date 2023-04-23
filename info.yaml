@@ -7,10 +7,13 @@ project:
   # Source files must be in ./src and you must list each source file separately
   source_files:
     - jmw95_top.v
+    - bcd2bin.v
     - bcd_to_seven_seg.v
+    - bin2bcd.v
     - bit_sampler.v
+    - counter.v
+    - days_in_month.v
     - decoder.v
-    - digit.v
     - digits.v
     - pulse_delay.v
     - second_counter.v

@@ -1,16 +1,15 @@
-module digit #(
-    parameter MIN = 0,
-    parameter MAX = 9,
-    parameter MAX2 = MAX,
-    parameter WIDTH = $clog2(MAX + 1)
+`default_nettype none
+
+module counter #(
+    parameter WIDTH = 6
 )(
     input                clk_i,
     input                rst_i,
 
-    output [WIDTH - 1:0] digit_o,
+    input  [WIDTH - 1:0] min_i,
+    input  [WIDTH - 1:0] max_i,
 
-    output               at_max_o,
-    input                at_max_i,
+    output [WIDTH - 1:0] value_o,
 
     input                inc_i,
     output               ovf_o,
@@ -21,40 +20,34 @@ module digit #(
 
 //-- Registers ---------------------------------------------------------------
 
-reg [WIDTH - 1:0] digit_reg, digit_next;
+reg [WIDTH - 1:0] value_reg, value_next;
 
 //-- Internal signals --------------------------------------------------------
 
-wire at_max_1;
-wire at_max_2;
 reg  ovf;
 
 //-- Logic -------------------------------------------------------------------
 
-assign digit_o = digit_reg;
+assign value_o = value_reg;
 assign ovf_o   = inc_i && ovf;
 
-assign at_max_1 = digit_reg == MAX;
-assign at_max_2 = at_max_i && digit_reg == MAX2;
-assign at_max_o = at_max_1;
-
 always @(*) begin
-    if (at_max_1 || at_max_2) begin
-        digit_next = MIN;
+    if (value_reg == max_i) begin
+        value_next = min_i;
         ovf = 1;
     end else begin
-        digit_next = digit_reg + 1;
+        value_next = value_reg + 1;
         ovf = 0;
     end
 end
 
 always @(posedge clk_i) begin
     if (rst_i) begin
-        digit_reg <= MIN;
+        value_reg <= min_i;
     end else if (load_i) begin
-        digit_reg <= load_value_i;
+        value_reg <= load_value_i;
     end else if (inc_i) begin
-        digit_reg <= digit_next;
+        value_reg <= value_next;
     end
 end
 

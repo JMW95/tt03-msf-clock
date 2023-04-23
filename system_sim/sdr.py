@@ -89,7 +89,7 @@ async def amain():
         digitised = (filtered > threshold).astype(int)
 
         # Resample
-        rate = sample_rate / 1000
+        rate = sample_rate / 12500
         idxs = np.arange(0, len(digitised), rate).astype(int)
         digitised = digitised[idxs]
 

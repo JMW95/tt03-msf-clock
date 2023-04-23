@@ -25,7 +25,8 @@ void Asic::update(Signals const& signals, Signals& next)
         (signals.clk << 0) |
         (signals.rst << 1) |
         (signals.data << 2) |
-        (signals.inverted << 3);
+        (signals.inverted << 3) |
+        (signals.shift_date << 4);
 
     m_top->eval();
 

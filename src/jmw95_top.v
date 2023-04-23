@@ -5,7 +5,7 @@ module jmw95_top (
     output [7:0] io_out
 );
 
-wire unused = &{ io_in[7:4] };
+wire unused = &{ io_in[7:5] };
 
 localparam CLK_FREQ = 12500;
 
@@ -14,6 +14,7 @@ wire clk  = io_in[0];
 wire rst  = io_in[1];
 wire data = io_in[2];
 wire inverted = io_in[3];
+wire shift_date = io_in[4];
 
 // bit_sampler <-> decoder
 wire sample_valid;
@@ -45,8 +46,11 @@ wire [3:0] sec_l_digit;
 // pulse_delay <-> shift_reg
 wire digits_updated;
 
-// seven_seg_digits <-> shift_reg
-wire [7 * 6 - 1:0] seven_seg;
+// seven_seg_digits <-> time_date_shift
+wire [7 * 12 - 1:0] seven_seg;
+
+// time_date_shift <-> shift_reg
+wire [7 * 12 - 1:0] seven_seg_shifted;
 
 // Outputs
 wire shift_reg_sclk;
@@ -125,8 +129,13 @@ digits digits (
     .second_l_load_i (4'h0)
 );
 
-seven_seg_digits #(.DIGITS(6)) seven_seg_digits (
+seven_seg_digits #(.DIGITS(12)) seven_seg_digits (
     .digits_i ({
+        // Date
+        {8'b10011000},
+        {8'b01110110},
+        {8'b01010100},
+
         // Time
         {2'b0, hour_h_digit},
         {hour_l_digit},
@@ -145,12 +154,18 @@ pulse_delay #(.DELAY(1)) pulse_delay (
     .data_o (digits_updated)
 );
 
-shift_reg #(.WIDTH(7 * 6)) shift_reg (
+time_date_shift #(.WIDTH(7 * 12)) time_date_shift (
+    .shift_i (shift_date),
+    .data_i (seven_seg),
+    .data_o (seven_seg_shifted)
+);
+
+shift_reg #(.WIDTH(7 * 12)) shift_reg (
     .clk_i   (clk),
     .rst_i   (rst),
 
     .start_i (digits_updated),
-    .data_i  (seven_seg),
+    .data_i  (seven_seg_shifted),
 
     .sclk_o  (shift_reg_sclk),
     .data_o  (shift_reg_data),

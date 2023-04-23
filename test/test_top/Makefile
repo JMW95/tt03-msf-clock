@@ -22,7 +22,8 @@ VERILOG_SOURCES += \
     $(SRC)/second_counter.v \
     $(SRC)/seven_seg_digits.v \
     $(SRC)/shift_reg.v \
-    $(SRC)/time_date_decoder.v
+    $(SRC)/time_date_decoder.v \
+    $(SRC)/time_date_shift.v
 
 else
 

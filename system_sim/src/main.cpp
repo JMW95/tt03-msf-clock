@@ -10,7 +10,7 @@
 using namespace std::chrono_literals;
 
 
-static const char USAGE[] = "usage: system_sim [-h] [--trace] [--throttle] [data_source]";
+static const char USAGE[] = "usage: system_sim [-h] [--inverted] [--trace] [--throttle] [data_source]";
 static const char HELP[] =
     "Full system simulation\n"
     "\n"

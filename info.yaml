@@ -38,8 +38,8 @@ documentation:
 
 # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
   how_to_test:  |
-      * Connect the data input to a WWVB / MSF receiver module.
-      * Connect the inverted input high if the module outputs a 1 when there is no carrier.
+      * Provide 12.5kHz clock to the clock pin, e.g. using the clock divider set to 0.
+      * Connect the data input to a WWVB / MSF receiver module. Connect the inverted input high if the module outputs a 1 when there is no carrier.
       * Connect the shift register outputs to a 42-bit shift register chain. Bit 41 is shifted out first.
 
       Bit | Segment

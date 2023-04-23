@@ -38,6 +38,9 @@ wire [3:0] min_l_digit;
 wire [2:0] sec_h_digit;
 wire [3:0] sec_l_digit;
 
+// pulse_delay <-> shift_reg
+wire digits_updated;
+
 // seven_seg_hms <-> shift_reg
 wire [7 * 6 - 1:0] seven_seg;
 
@@ -120,11 +123,18 @@ seven_seg_hms seven_seg_hms (
     .seven_seg_hms_o (seven_seg)
 );
 
+pulse_delay #(.DELAY(1)) pulse_delay (
+    .clk_i (clk),
+    .rst_i (rst),
+    .data_i (second_inc),
+    .data_o (digits_updated)
+);
+
 shift_reg #(.WIDTH(7 * 6)) shift_reg (
     .clk_i   (clk),
     .rst_i   (rst),
 
-    .start_i (bits_valid),  // TODO: We should wait for the digits to update first!
+    .start_i (digits_updated),
     .data_i  (seven_seg),
 
     .sclk_o  (shift_reg_sclk),

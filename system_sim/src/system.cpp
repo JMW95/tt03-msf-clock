@@ -30,9 +30,11 @@ void System::trace()
 }
 
 
-void System::update()
+void System::update(bool shift_date)
 {
     Signals next = m_signals;
+    next.shift_date = shift_date;
+
     m_asic.update(m_signals, next);
     m_display.update(m_signals, next);
     m_clk_and_rst.update(m_signals, next);

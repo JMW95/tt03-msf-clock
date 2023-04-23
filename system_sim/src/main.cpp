@@ -1,5 +1,6 @@
 #include <chrono>
 #include <fstream>
+#include <iostream>
 #include <memory>
 #include <string>
 #include <thread>
@@ -13,6 +14,8 @@ using namespace std::chrono_literals;
 static const char USAGE[] = "usage: system_sim [-h] [--inverted] [--trace] [--throttle] [data_source]";
 static const char HELP[] =
     "Full system simulation\n"
+    "\n"
+    "Press enter while running to swap between time and date display\n"
     "\n"
     "positional arguments:\n"
     "    data_source  path to CSV file to use for input data, or '-' to use stdin\n"
@@ -85,12 +88,25 @@ int main(int argc, char **argv)
 
     auto start_t = std::chrono::system_clock::now();
 
+    bool shift_date = false;
+
     while (!args.data_source->done()) {
+        struct timeval tv = { 0L, 0L };
+        fd_set fds;
+        FD_ZERO(&fds);
+        FD_SET(0, &fds);
+        int ready = select(0 + 1, &fds, NULL, NULL, &tv);
+        if (ready > 0) {
+            std::string input;
+            std::getline(std::cin, input);
+            shift_date = !shift_date;
+        }
+
         if (args.throttle) {
             std::this_thread::sleep_until(start_t + system.time_ns() * 1ns);
         }
 
-        system.update();
+        system.update(shift_date);
     }
 
     return 0;

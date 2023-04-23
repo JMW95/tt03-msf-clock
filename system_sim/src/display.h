@@ -20,4 +20,5 @@ private:
     uint64_t m_shift_reg = 0;
     uint64_t m_latched_shift_reg = 0;
     bool m_dirty = true;
+    bool m_showing_date = false;
 };

@@ -20,6 +20,8 @@ void Display::update(Signals const& signals, Signals& next)
 
     m_prev_sclk = signals.shift_reg_sclk;
 
+    m_showing_date = signals.shift_date;
+
     if (signals.shift_reg_latch && m_latched_shift_reg != m_shift_reg) {
         m_dirty = true;
         m_latched_shift_reg = m_shift_reg;
@@ -54,10 +56,12 @@ void Display::print()
     };
 
     // Draw the ':'s in
-    set(14, 3);
-    set(14, 7);
-    set(29, 3);
-    set(29, 7);
+    if (!m_showing_date) {
+        set(14, 3);
+        set(14, 7);
+        set(29, 3);
+        set(29, 7);
+    }
 
     for (size_t digit = 0; digit < NUM_DIGITS; digit++) {
         uint8_t code = m_digits[digit];

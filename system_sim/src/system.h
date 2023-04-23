@@ -16,7 +16,7 @@ public:
     ~System();
 
     void trace();
-    void update();
+    void update(bool shift_date);
     uint64_t time_ns() const;
 
 private:

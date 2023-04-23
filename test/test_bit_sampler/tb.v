@@ -21,7 +21,9 @@ module tb (
 `endif
 
 // instantiate the DUT
-bit_sampler bit_sampler(
+bit_sampler #(
+    .CLK_FREQ(1000)
+) bit_sampler(
     .clk_i(clk_i),
     .rst_i(rst_i),
 

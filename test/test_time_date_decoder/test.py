@@ -90,10 +90,9 @@ async def test_time_date_normal(dut):
         a = a_samples[idx % len(a_samples)]
         b = b_samples[idx % len(b_samples)]
 
-        dut.bits_data_i[0].value = a
-        dut.bits_data_i[1].value = b
-        dut.bits_is_second_00_i = idx % 60 == 0
-        dut.bits_valid_i = 1
+        dut.bits_data_i.value = (b << 1) | a
+        dut.bits_is_second_00_i.value = idx % 60 == 0
+        dut.bits_valid_i.value = 1
 
         await ClockCycles(dut.clk_i, 1)
 

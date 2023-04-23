@@ -5,15 +5,9 @@ module time_date_shift #(
 ) (
     input shift_i,
     input [WIDTH-1:0] data_i,
-    output reg [WIDTH-1:0] data_o
+    output [WIDTH-1:0] data_o
 );
 
-always @(*) begin
-    if (shift_i) begin
-        data_o = {data_i[WIDTH/2 - 1:0], data_i[WIDTH-1:WIDTH/2]};
-    end else begin
-        data_o = data_i;
-    end
-end
+assign data_o = shift_i ? {data_i[WIDTH/2 - 1:0], data_i[WIDTH-1:WIDTH/2]} : data_i;
 
 endmodule

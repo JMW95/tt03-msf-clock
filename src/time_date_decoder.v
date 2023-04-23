@@ -60,7 +60,8 @@ wire parity_54b = b_shift_reg[54] ^ (^a_shift_reg[24:17]);
 wire parity_55b = b_shift_reg[55] ^ (^a_shift_reg[35:25]);
 wire parity_56b = b_shift_reg[56] ^ (^a_shift_reg[38:36]);
 wire parity_57b = b_shift_reg[57] ^ (^a_shift_reg[51:39]);
-wire parity_valid = parity_54b & parity_55b & parity_56b & parity_57b;
+wire top_of_minute = a_shift_reg[59:52] == 8'b01111110;
+wire parity_valid = parity_54b & parity_55b & parity_56b & parity_57b & top_of_minute;
 
 function [3:0] swap4(input [3:0] a);
     swap4[0] = a[3];

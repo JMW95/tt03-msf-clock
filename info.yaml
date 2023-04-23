@@ -12,6 +12,8 @@ project:
     - decoder.v
     - digit.v
     - digits.v
+    - pulse_delay.v
+    - second_counter.v
     - seven_seg_hms.v
     - shift_reg.v
     - time_date_decoder.v

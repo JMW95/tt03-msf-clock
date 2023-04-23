@@ -98,7 +98,7 @@ async def test_time_date_normal(dut):
 
         valid = dut.valid_o.value
 
-        if idx == 61:
+        if idx == 60:
             assert valid
 
             assert dut.year_h_o.value == 2

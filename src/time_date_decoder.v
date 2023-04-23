@@ -66,7 +66,7 @@ assign hour_h_o = swap2(a_shift_reg[40:39]);
 assign hour_l_o = swap4(a_shift_reg[44:41]);
 assign minute_h_o = swap3(a_shift_reg[47:45]);
 assign minute_l_o = swap4(a_shift_reg[51:48]);
-assign valid_o = parity_valid && bits_is_second_00_i && bits_valid_i;
+assign valid_o = parity_valid && bits_is_second_00_i;
 
 always @(posedge clk_i) begin
     // Shift data in

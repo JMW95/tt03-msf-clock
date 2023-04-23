@@ -3,8 +3,10 @@
 #include "system.h"
 
 
-System::System(std::shared_ptr<DataSource> data_source) : m_receiver{data_source}
+System::System(std::shared_ptr<DataSource> data_source, bool inverted)
+: m_receiver{data_source}
 {
+    m_signals.inverted = inverted;
 }
 
 

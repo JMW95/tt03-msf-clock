@@ -19,12 +19,14 @@ static const char HELP[] =
     "\n"
     "optional arguments:\n"
     "    -h, --help   show this help message and exit\n"
+    "    --inverted   input data is inverted\n"
     "    --trace      enable tracing and save to a '.gtkw' file\n"
     "    --throttle   throttle the data source to run in real time";
 
 
 struct CommandLineArgs
 {
+    bool inverted = false;
     bool trace = false;
     bool throttle = false;
     std::shared_ptr<DataSource> data_source = DataSource::from_sim();
@@ -45,6 +47,8 @@ CommandLineArgs parse_args(int argc, char **argv)
         } else if (arg == "-h" || arg == "--help") {
             printf("%s\n\n%s\n", USAGE, HELP);
             std::exit(0);
+        } else if (arg == "--inverted") {
+            args.inverted = true;
         } else if (arg == "--trace") {
             args.trace = true;
         } else if (arg == "--throttle") {
@@ -73,7 +77,7 @@ int main(int argc, char **argv)
 {
     CommandLineArgs args = parse_args(argc, argv);
 
-    System system{args.data_source};
+    System system{args.data_source, args.inverted};
 
     if (args.trace) {
         system.trace();

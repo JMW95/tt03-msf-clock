@@ -12,7 +12,7 @@
 class System
 {
 public:
-    explicit System(std::shared_ptr<DataSource> data_source);
+    System(std::shared_ptr<DataSource> data_source, bool inverted);
     ~System();
 
     void trace();

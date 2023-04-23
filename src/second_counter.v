@@ -7,7 +7,7 @@ module second_counter (
     output second_inc_o
 );
 
-`define SECOND_FULL 10'd1000; // 1 second
+`define SECOND_FULL 10'd1000 // 1 second
 
 reg [9:0] count_reg;
 
@@ -17,12 +17,12 @@ always @(posedge clk_i) begin
     // Decrement counter
     count_reg <= count_reg - 1;
     if (count_reg == 0) begin
-        count_reg <= `SECOND_FULL;
+        count_reg <= (`SECOND_FULL - 1);
     end
 
     // Reset
     if (rst_i) begin
-        count_reg <= `SECOND_FULL;
+        count_reg <= (`SECOND_FULL - 1);
     end
 end
 

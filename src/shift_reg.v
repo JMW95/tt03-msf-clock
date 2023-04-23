@@ -39,14 +39,14 @@ always @(posedge clk_i) begin
     end else if (start_i) begin
         idle_reg  <= 1'b0;
         latch_reg <= 1'b0;
-        count_reg <= COUNT_WIDTH'(WIDTH) - 1;
+        count_reg <= COUNT_WIDTH'(WIDTH - 1);
     end else if (!idle_reg) begin
         if (sclk_reg == 1'b1) begin
             sclk_reg <= 1'b0;
             data_reg <= data_next;
         end else begin
             sclk_reg  <= 1'b1;
-            count_reg <= count_reg - 1;
+            count_reg <= count_reg - COUNT_WIDTH'(1);
             idle_reg  <= count_reg == 0;
         end
     end else begin

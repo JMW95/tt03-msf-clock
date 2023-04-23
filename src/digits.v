@@ -42,6 +42,8 @@ wire [6:0] hour_load;
 wire [6:0] minute_load;
 wire [6:0] second_load;
 
+wire [9:0] unused = {month_load[6:4], day_load[6:5], hour_load[6:5], minute_load[6], second_load[6], year_o[8]};
+
 bcd2bin year_bcd (
     .bcd({year_h_load_i, year_l_load_i}),
     .bin(year_load)

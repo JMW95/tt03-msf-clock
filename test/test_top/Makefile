@@ -13,7 +13,9 @@ SRC = $(PWD)/../../src/
 VERILOG_SOURCES += \
 	$(PWD)/tb.v \
 	$(SRC)/jmw95_top.v \
+    $(SRC)/bcd2bin.v \
     $(SRC)/bcd_to_seven_seg.v \
+    $(SRC)/bin2bcd.v \
     $(SRC)/bit_sampler.v \
     $(SRC)/counter.v \
     $(SRC)/days_in_month.v \

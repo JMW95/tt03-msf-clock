@@ -118,7 +118,7 @@ second_counter #(
     .CLK_FREQ(CLK_FREQ)
 ) second_counter (
     .clk_i (clk),
-    .rst_i (rst),
+    .rst_i (rst | time_load),
     .second_inc_o (second_inc)
 );
 

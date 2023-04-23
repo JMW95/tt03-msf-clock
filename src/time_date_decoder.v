@@ -30,6 +30,8 @@ module time_date_decoder (
 reg [59:17] a_shift_reg;
 reg [59:54] b_shift_reg;
 
+reg valid_reg;
+
 wire parity_54b = b_shift_reg[54] ^ (^a_shift_reg[24:17]);
 wire parity_55b = b_shift_reg[55] ^ (^a_shift_reg[35:25]);
 wire parity_56b = b_shift_reg[56] ^ (^a_shift_reg[38:36]);
@@ -66,7 +68,7 @@ assign hour_h_o = swap2(a_shift_reg[40:39]);
 assign hour_l_o = swap4(a_shift_reg[44:41]);
 assign minute_h_o = swap3(a_shift_reg[47:45]);
 assign minute_l_o = swap4(a_shift_reg[51:48]);
-assign valid_o = parity_valid && bits_is_second_00_i;
+assign valid_o = parity_valid && bits_is_second_00_i && !valid_reg;
 
 always @(posedge clk_i) begin
     // Shift data in
@@ -75,10 +77,20 @@ always @(posedge clk_i) begin
         b_shift_reg <= { bits_data_i[1], b_shift_reg[59:55] };
     end
 
+    if (parity_valid && bits_is_second_00_i) begin
+        if (!valid_reg) begin
+            valid_reg <= 1;
+        end
+    end else begin
+        valid_reg <= 0;
+    end
+
     // Reset
     if (rst_i) begin
         a_shift_reg <= 0;
         b_shift_reg <= 0;
+
+        valid_reg <= 0;
     end
 end
 

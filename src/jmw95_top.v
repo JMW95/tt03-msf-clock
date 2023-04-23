@@ -156,12 +156,12 @@ digits digits (
 seven_seg_digits #(.DIGITS(12)) seven_seg_digits (
     .digits_i ({
         // Date
-        {year_h_digit},
-        {year_l_digit},
-        {3'b0, month_h_digit},
-        {month_l_digit},
         {2'b0, day_h_digit},
         {day_l_digit},
+        {3'b0, month_h_digit},
+        {month_l_digit},
+        {year_h_digit},
+        {year_l_digit},
 
         // Time
         {2'b0, hour_h_digit},

@@ -19,6 +19,9 @@ wire       bits_valid;
 wire       bits_is_second_00;
 wire [1:0] bits_data;
 
+// second_counter <-> digits
+wire second_inc;
+
 // time_date_decoder <-> digits
 wire [1:0]  hour_h;
 wire [3:0]  hour_l;
@@ -81,10 +84,16 @@ time_date_decoder time_date_decoder (
     .valid_o             (time_load)
 );
 
+second_counter second_counter (
+    .clk_i (clk),
+    .rst_i (rst),
+    .second_inc_o (second_inc)
+);
+
 digits digits (
     .clk_i           (clk),
     .rst_i           (rst),
-    .inc_i           (bits_valid),
+    .inc_i           (second_inc),
     .hour_h_digit_o  (hour_h_digit),
     .hour_l_digit_o  (hour_l_digit),
     .min_h_digit_o   (min_h_digit),

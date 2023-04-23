@@ -34,6 +34,44 @@ module digits (
     input [3:0]  second_l_load_i
 );
 
+wire [6:0] year_load;
+wire [6:0] month_load;
+wire [6:0] day_load;
+
+wire [6:0] hour_load;
+wire [6:0] minute_load;
+wire [6:0] second_load;
+
+bcd2bin year_bcd (
+    .bcd({year_h_load_i, year_l_load_i}),
+    .bin(year_load)
+);
+
+bcd2bin month_bcd (
+    .bcd({3'b0, month_h_load_i, month_l_load_i}),
+    .bin(month_load)
+);
+
+bcd2bin day_bcd (
+    .bcd({2'b0, day_h_load_i, day_l_load_i}),
+    .bin(day_load)
+);
+
+bcd2bin hour_bcd (
+    .bcd({2'b0, hour_h_load_i, hour_l_load_i}),
+    .bin(hour_load)
+);
+
+bcd2bin minute_bcd (
+    .bcd({1'b0, minute_h_load_i, minute_l_load_i}),
+    .bin(minute_load)
+);
+
+bcd2bin second_bcd (
+    .bcd({1'b0, second_h_load_i, second_l_load_i}),
+    .bin(second_load)
+);
+
 
 wire [6:0] year;
 wire [3:0] month;
@@ -41,6 +79,38 @@ wire [4:0] day;
 wire [4:0] hour;
 wire [5:0] minute;
 wire [5:0] second;
+
+wire [8:0] year_o;
+assign {year_h_digit_o, year_l_digit_o}= year_o[7:0];
+bin2bcd #(.W(7)) year_bcd_o (
+    .bin(year),
+    .bcd(year_o)
+);
+
+bin2bcd #(.W(4)) month_bcd_o (
+    .bin(month),
+    .bcd({month_h_digit_o, month_l_digit_o})
+);
+
+bin2bcd #(.W(5)) day_bcd_o (
+    .bin(day),
+    .bcd({day_h_digit_o, day_l_digit_o})
+);
+
+bin2bcd #(.W(5)) hour_bcd_o (
+    .bin(hour),
+    .bcd({hour_h_digit_o, hour_l_digit_o})
+);
+
+bin2bcd minute_bcd_o (
+    .bin(minute),
+    .bcd({minute_h_digit_o, minute_l_digit_o})
+);
+
+bin2bcd second_bcd_o (
+    .bin(second),
+    .bcd({second_h_digit_o, second_l_digit_o})
+);
 
 wire month_ovf;
 wire day_ovf;
@@ -70,7 +140,7 @@ counter #(.WIDTH(7)) year_counter (
     .ovf_o        (),
 
     .load_i       (load_i),
-    .load_value_i (load_year_i)
+    .load_value_i (year_load)
 );
 
 // verilator lint_on PINCONNECTEMPTY
@@ -88,7 +158,7 @@ counter #(.WIDTH(4)) month_counter (
     .ovf_o        (month_ovf),
 
     .load_i       (load_i),
-    .load_value_i (load_month_i)
+    .load_value_i (month_load[3:0])
 );
 
 counter #(.WIDTH(5)) day_counter (
@@ -104,7 +174,7 @@ counter #(.WIDTH(5)) day_counter (
     .ovf_o        (day_ovf),
 
     .load_i       (load_i),
-    .load_value_i (load_day_i)
+    .load_value_i (day_load[4:0])
 );
 
 counter #(.WIDTH(5)) hour_counter (
@@ -120,7 +190,7 @@ counter #(.WIDTH(5)) hour_counter (
     .ovf_o        (hour_ovf),
 
     .load_i       (load_i),
-    .load_value_i (load_hour_i)
+    .load_value_i (hour_load[4:0])
 );
 
 counter #(.WIDTH(6)) minute_counter (
@@ -136,7 +206,7 @@ counter #(.WIDTH(6)) minute_counter (
     .ovf_o        (minute_ovf),
 
     .load_i       (load_i),
-    .load_value_i (load_minute_i)
+    .load_value_i (minute_load[5:0])
 );
 
 counter #(.WIDTH(6)) second_counter (
@@ -152,7 +222,7 @@ counter #(.WIDTH(6)) second_counter (
     .ovf_o        (second_ovf),
 
     .load_i       (load_i),
-    .load_value_i (load_second_i)
+    .load_value_i (second_load[5:0])
 );
 
 endmodule

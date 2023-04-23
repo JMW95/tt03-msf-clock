@@ -1,4 +1,5 @@
 module digit #(
+    parameter MIN = 0,
     parameter MAX = 9,
     parameter MAX2 = MAX,
     parameter WIDTH = $clog2(MAX + 1)
@@ -39,7 +40,7 @@ assign at_max_o = at_max_1;
 
 always @(*) begin
     if (at_max_1 || at_max_2) begin
-        digit_next = 0;
+        digit_next = MIN;
         ovf = 1;
     end else begin
         digit_next = digit_reg + 1;
@@ -49,7 +50,7 @@ end
 
 always @(posedge clk_i) begin
     if (rst_i) begin
-        digit_reg <= 0;
+        digit_reg <= MIN;
     end else if (load_i) begin
         digit_reg <= load_value_i;
     end else if (inc_i) begin

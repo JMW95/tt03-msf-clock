@@ -4,6 +4,7 @@ SUBMODULE_TESTS = \
     test_bit_sampler \
     test_decoder \
     test_digit \
+    test_digits \
     test_shift_reg \
     test_time_date_decoder
 

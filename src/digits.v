@@ -73,6 +73,8 @@ counter #(.WIDTH(7)) year_counter (
     .load_value_i (load_year_i)
 );
 
+// verilator lint_on PINCONNECTEMPTY
+
 counter #(.WIDTH(4)) month_counter (
     .clk_i        (clk_i),
     .rst_i        (rst_i),
@@ -152,7 +154,5 @@ counter #(.WIDTH(6)) second_counter (
     .load_i       (load_i),
     .load_value_i (load_second_i)
 );
-
-// verilator lint_on PINCONNECTEMPTY
 
 endmodule

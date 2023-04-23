@@ -15,8 +15,9 @@ VERILOG_SOURCES += \
 	$(SRC)/jmw95_top.v \
     $(SRC)/bcd_to_seven_seg.v \
     $(SRC)/bit_sampler.v \
+    $(SRC)/counter.v \
+    $(SRC)/days_in_month.v \
     $(SRC)/decoder.v \
-    $(SRC)/digit.v \
     $(SRC)/digits.v \
     $(SRC)/pulse_delay.v \
     $(SRC)/second_counter.v \

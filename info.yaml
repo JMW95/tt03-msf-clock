@@ -9,8 +9,9 @@ project:
     - jmw95_top.v
     - bcd_to_seven_seg.v
     - bit_sampler.v
+    - counter.v
+    - days_in_month.v
     - decoder.v
-    - digit.v
     - digits.v
     - pulse_delay.v
     - second_counter.v

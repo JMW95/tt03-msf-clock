@@ -29,6 +29,12 @@ wire [1:0] bits_data;
 wire second_inc;
 
 // time_date_decoder <-> digits
+wire [3:0]  year_h;
+wire [3:0]  year_l;
+wire [0:0]  month_h;
+wire [3:0]  month_l;
+wire [1:0]  day_h;
+wire [3:0]  day_l;
 wire [1:0]  hour_h;
 wire [3:0]  hour_l;
 wire [2:0]  minute_h;
@@ -36,12 +42,18 @@ wire [3:0]  minute_l;
 wire        time_load;
 
 // digits <-> seven_seg_digits
+wire [3:0] year_h_digit;
+wire [3:0] year_l_digit;
+wire [0:0] month_h_digit;
+wire [3:0] month_l_digit;
+wire [1:0] day_h_digit;
+wire [3:0] day_l_digit;
 wire [1:0] hour_h_digit;
 wire [3:0] hour_l_digit;
-wire [2:0] min_h_digit;
-wire [3:0] min_l_digit;
-wire [2:0] sec_h_digit;
-wire [3:0] sec_l_digit;
+wire [2:0] minute_h_digit;
+wire [3:0] minute_l_digit;
+wire [2:0] second_h_digit;
+wire [3:0] second_l_digit;
 
 // pulse_delay <-> shift_reg
 wire digits_updated;
@@ -86,12 +98,12 @@ time_date_decoder time_date_decoder (
     .bits_valid_i        (bits_valid),
     .bits_is_second_00_i (bits_is_second_00),
     .bits_data_i         (bits_data),
-    .year_h_o            (),
-    .year_l_o            (),
-    .month_h_o           (),
-    .month_l_o           (),
-    .day_h_o             (),
-    .day_l_o             (),
+    .year_h_o            (year_h),
+    .year_l_o            (year_l),
+    .month_h_o           (month_h),
+    .month_l_o           (month_l),
+    .day_h_o             (day_h),
+    .day_l_o             (day_l),
     .dow_o               (),
     .hour_h_o            (hour_h),
     .hour_l_o            (hour_l),
@@ -111,38 +123,53 @@ second_counter #(
 );
 
 digits digits (
-    .clk_i           (clk),
-    .rst_i           (rst),
-    .inc_i           (second_inc),
-    .hour_h_digit_o  (hour_h_digit),
-    .hour_l_digit_o  (hour_l_digit),
-    .min_h_digit_o   (min_h_digit),
-    .min_l_digit_o   (min_l_digit),
-    .sec_h_digit_o   (sec_h_digit),
-    .sec_l_digit_o   (sec_l_digit),
-    .load_i          (time_load),
-    .hour_h_load_i   (hour_h),
-    .hour_l_load_i   (hour_l),
-    .minute_h_load_i (minute_h),
-    .minute_l_load_i (minute_l),
-    .second_h_load_i (3'h0),
-    .second_l_load_i (4'h0)
+    .clk_i             (clk),
+    .rst_i             (rst),
+    .inc_i             (second_inc),
+    .year_h_digit_o    (year_h_digit),
+    .year_l_digit_o    (year_l_digit),
+    .month_h_digit_o   (month_h_digit),
+    .month_l_digit_o   (month_l_digit),
+    .day_h_digit_o     (day_h_digit),
+    .day_l_digit_o     (day_l_digit),
+    .hour_h_digit_o    (hour_h_digit),
+    .hour_l_digit_o    (hour_l_digit),
+    .minute_h_digit_o  (minute_h_digit),
+    .minute_l_digit_o  (minute_l_digit),
+    .second_h_digit_o  (second_h_digit),
+    .second_l_digit_o  (second_l_digit),
+    .load_i            (time_load),
+    .year_h_load_i     (year_h),
+    .year_l_load_i     (year_l),
+    .month_h_load_i    (month_h),
+    .month_l_load_i    (month_l),
+    .day_h_load_i      (day_h),
+    .day_l_load_i      (day_l),
+    .hour_h_load_i     (hour_h),
+    .hour_l_load_i     (hour_l),
+    .minute_h_load_i   (minute_h),
+    .minute_l_load_i   (minute_l),
+    .second_h_load_i   (3'h0),
+    .second_l_load_i   (4'h0)
 );
 
 seven_seg_digits #(.DIGITS(12)) seven_seg_digits (
     .digits_i ({
         // Date
-        {8'b10011000},
-        {8'b01110110},
-        {8'b01010100},
+        {year_h_digit},
+        {year_l_digit},
+        {3'b0, month_h_digit},
+        {month_l_digit},
+        {2'b0, day_h_digit},
+        {day_l_digit},
 
         // Time
         {2'b0, hour_h_digit},
         {hour_l_digit},
-        {1'b0, min_h_digit},
-        {min_l_digit},
-        {1'b0, sec_h_digit},
-        {sec_l_digit}
+        {1'b0, minute_h_digit},
+        {minute_l_digit},
+        {1'b0, second_h_digit},
+        {second_l_digit}
     }),
     .seven_seg_o (seven_seg)
 );

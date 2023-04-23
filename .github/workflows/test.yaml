@@ -16,11 +16,16 @@ jobs:
       with:
           python-override: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-    - run: | 
+    - run: |
         yosys --version
         iverilog -V
         cocotb-config --libpython
         cocotb-config --python-bin
+
+    - name: lint
+      run: |
+        cd src
+        verilator --lint-only -Wall -Wpedantic jmw95_top.v
 
     - name: test
       run: |

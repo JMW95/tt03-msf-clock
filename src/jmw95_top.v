@@ -5,6 +5,8 @@ module jmw95_top (
     output [7:0] io_out
 );
 
+wire unused = &{ io_in[7:4] };
+
 localparam CLK_FREQ = 12500;
 
 // Inputs
@@ -72,6 +74,8 @@ decoder decoder (
     .bits_data_o         (bits_data)
 );
 
+// verilator lint_off PINCONNECTEMPTY
+
 time_date_decoder time_date_decoder (
     .clk_i               (clk),
     .rst_i               (rst),
@@ -91,6 +95,8 @@ time_date_decoder time_date_decoder (
     .minute_l_o          (minute_l),
     .valid_o             (time_load)
 );
+
+// verilator lint_on PINCONNECTEMPTY
 
 second_counter #(
     .CLK_FREQ(CLK_FREQ)

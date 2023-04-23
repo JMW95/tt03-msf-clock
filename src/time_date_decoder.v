@@ -27,8 +27,8 @@ module time_date_decoder (
     output valid_o
 );
 
-reg [59:0] a_shift_reg;
-reg [59:0] b_shift_reg;
+reg [59:17] a_shift_reg;
+reg [59:54] b_shift_reg;
 
 reg [3:0] year_h_reg;
 reg [3:0] year_l_reg;
@@ -86,8 +86,8 @@ always @(posedge clk_i) begin
 
     // Shift data in
     if (bits_valid_i) begin
-        a_shift_reg <= { bits_data_i[0], a_shift_reg[59:1] };
-        b_shift_reg <= { bits_data_i[1], b_shift_reg[59:1] };
+        a_shift_reg <= { bits_data_i[0], a_shift_reg[59:18] };
+        b_shift_reg <= { bits_data_i[1], b_shift_reg[59:55] };
     end
 
     // End of minute

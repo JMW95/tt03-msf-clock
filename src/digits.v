@@ -30,6 +30,8 @@ wire sec_l_ovf;
 
 wire hour_h_at_max;
 
+// verilator lint_off PINCONNECTEMPTY
+
 // 2-bits
 digit #(.MAX(2)) hour_h (
     .clk_i        (clk_i),
@@ -107,5 +109,7 @@ digit #(.MAX(9)) sec_l (
     .load_i       (load_i),
     .load_value_i (second_l_load_i)
 );
+
+// verilator lint_on PINCONNECTEMPTY
 
 endmodule

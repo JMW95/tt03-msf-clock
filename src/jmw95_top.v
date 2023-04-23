@@ -181,9 +181,12 @@ pulse_delay #(.DELAY(1)) pulse_delay (
     .data_o (digits_updated)
 );
 
+// Turn off year display
+wire [83:0] seven_seg_no_year = {seven_seg[83:56], 14'b0, seven_seg[41:0]};
+
 time_date_shift #(.WIDTH(7 * 12)) time_date_shift (
     .shift_i (shift_date),
-    .data_i (seven_seg),
+    .data_i (seven_seg_no_year),
     .data_o (seven_seg_shifted)
 );
 

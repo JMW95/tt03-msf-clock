@@ -5,6 +5,8 @@ module jmw95_top (
     output [7:0] io_out
 );
 
+localparam CLK_FREQ = 12500;
+
 // Inputs
 wire clk  = io_in[0];
 wire rst  = io_in[1];
@@ -50,7 +52,9 @@ wire shift_reg_data;
 wire shift_reg_latch;
 assign io_out = {5'b0, shift_reg_latch, shift_reg_data, shift_reg_sclk};
 
-bit_sampler bit_sampler (
+bit_sampler #(
+    .CLK_FREQ(CLK_FREQ)
+) bit_sampler (
     .clk_i   (clk),
     .rst_i   (rst),
     .data_i  (data ^ inverted),
@@ -88,7 +92,9 @@ time_date_decoder time_date_decoder (
     .valid_o             (time_load)
 );
 
-second_counter second_counter (
+second_counter #(
+    .CLK_FREQ(CLK_FREQ)
+) second_counter (
     .clk_i (clk),
     .rst_i (rst),
     .second_inc_o (second_inc)

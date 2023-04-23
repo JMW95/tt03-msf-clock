@@ -12,6 +12,19 @@ async def setup(dut):
     dut.inc_i.value = 0
     dut.load_i.value = 0
 
+    dut.year_h_load_i.value = 0
+    dut.year_l_load_i.value = 0
+    dut.month_h_load_i.value = 0
+    dut.month_l_load_i.value = 0
+    dut.day_h_load_i.value = 0
+    dut.day_l_load_i.value = 0
+    dut.hour_h_load_i.value = 0
+    dut.hour_l_load_i.value = 0
+    dut.minute_h_load_i.value = 0
+    dut.minute_l_load_i.value = 0
+    dut.second_h_load_i.value = 0
+    dut.second_l_load_i.value = 0
+
     dut.rst_i.value = 1
     await ClockCycles(dut.clk_i, 10)
     dut.rst_i.value = 0
@@ -84,4 +97,21 @@ async def test_no_rollover(dut):
 @cocotb.test()
 async def test_all_rollover(dut):
     await setup(dut)
+    await run_counter(dut, datetime.datetime(year=2023, month=12, day=31, hour=23, minute=59, second=40), 100)
+
+@cocotb.test()
+async def test_month_rollovers(dut):
+    await setup(dut)
+
+    await run_counter(dut, datetime.datetime(year=2023, month=1, day=31, hour=23, minute=59, second=40), 100)
+    await run_counter(dut, datetime.datetime(year=2023, month=2, day=28, hour=23, minute=59, second=40), 100)
+    await run_counter(dut, datetime.datetime(year=2023, month=3, day=31, hour=23, minute=59, second=40), 100)
+    await run_counter(dut, datetime.datetime(year=2023, month=4, day=30, hour=23, minute=59, second=40), 100)
+    await run_counter(dut, datetime.datetime(year=2023, month=5, day=31, hour=23, minute=59, second=40), 100)
+    await run_counter(dut, datetime.datetime(year=2023, month=6, day=30, hour=23, minute=59, second=40), 100)
+    await run_counter(dut, datetime.datetime(year=2023, month=7, day=31, hour=23, minute=59, second=40), 100)
+    await run_counter(dut, datetime.datetime(year=2023, month=8, day=31, hour=23, minute=59, second=40), 100)
+    await run_counter(dut, datetime.datetime(year=2023, month=9, day=30, hour=23, minute=59, second=40), 100)
+    await run_counter(dut, datetime.datetime(year=2023, month=10, day=31, hour=23, minute=59, second=40), 100)
+    await run_counter(dut, datetime.datetime(year=2023, month=11, day=30, hour=23, minute=59, second=40), 100)
     await run_counter(dut, datetime.datetime(year=2023, month=12, day=31, hour=23, minute=59, second=40), 100)

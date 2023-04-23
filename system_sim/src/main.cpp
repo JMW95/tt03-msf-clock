@@ -20,7 +20,7 @@ static const char HELP[] =
     "optional arguments:\n"
     "    -h, --help   show this help message and exit\n"
     "    --inverted   input data is inverted\n"
-    "    --trace      enable tracing and save to a '.gtkw' file\n"
+    "    --trace      enable tracing and save to a '.vcd' file\n"
     "    --throttle   throttle the data source to run in real time";
 
 
